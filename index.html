@@ -1,0 +1,1286 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Crimson RP — SA:MP сервер · Android</title>
+<meta name="description" content="Crimson RP — Roleplay-сервер SA:MP. Скачай клиент для Android или ПК и начни играть.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23220810'/><text x='50' y='68' font-size='52' font-family='Arial Black' font-weight='900' fill='%23ff2135' text-anchor='middle'>C</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0a0c; --bg2:#101013; --card:#121215; --line:rgba(255,255,255,.09);
+    --txt:#f2f3f6; --mut:#8d929b; --dim:#5c616b;
+    --acc:255,33,53; --acc2:#8e0d18; --acc3:#5d0710; --accl:#ff8d99;
+    --red:rgb(var(--acc)); --red2:var(--acc2); --redsoft:rgba(var(--acc),.14);
+  }
+  html[data-theme="green"]{--acc:39,209,101;--acc2:#0f6e35;--acc3:#06371b;--accl:#8df2b5}
+  html[data-theme="blue"]{--acc:62,180,255;--acc2:#1266a8;--acc3:#0b3d63;--accl:#a8d9ff}
+  html[data-theme="gold"]{--acc:255,196,68;--acc2:#8a6412;--acc3:#4d370a;--accl:#ffdd97}
+  html[data-theme="violet"]{--acc:157,102,255;--acc2:#5322a8;--acc3:#2f115f;--accl:#cbb1ff}
+  *,*:before,*:after{-webkit-tap-highlight-color:transparent;box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--txt);font-family:'Montserrat',Arial,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  img{display:block;max-width:100%}
+  ::selection{background:var(--red);color:#fff}
+  ::-webkit-scrollbar{width:10px}
+  ::-webkit-scrollbar-thumb{background:#2a2b31;border-radius:8px}
+  ::-webkit-scrollbar-track{background:transparent}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+
+  /* ============ ШАПКА ============ */
+  .head{position:fixed;left:0;right:0;top:0;z-index:50;height:72px;
+    background:rgba(10,10,12,.78);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line);transition:background .2s}
+  .head .wrap{height:100%;display:flex;align-items:center;gap:26px}
+  .logo{display:flex;align-items:center;gap:11px;user-select:none}
+  .logo b{font-family:'Anton',Impact,sans-serif;font-size:24px;letter-spacing:1.5px;transform:skewX(-8deg)}
+  .logo b em{font-style:normal;color:var(--red)}
+  .obadge{display:flex;align-items:center;gap:7px;height:34px;padding:0 14px;border-radius:9px;
+    background:rgba(255,255,255,.05);border:1px solid var(--line);font-size:11.5px;font-weight:800;
+    letter-spacing:1.4px;color:var(--mut);white-space:nowrap}
+  .obadge i{width:7px;height:7px;border-radius:50%;background:#2ecc71;box-shadow:0 0 8px rgba(46,204,113,.9);animation:blip 2s infinite}
+  .obadge b{color:var(--txt)}
+  @keyframes blip{0%,100%{opacity:.5}50%{opacity:1}}
+  .nav{display:flex;gap:6px;margin:0 auto}
+  .nav a{padding:9px 14px;border-radius:9px;font-size:12px;font-weight:700;letter-spacing:1.6px;color:var(--mut);transition:color .15s,background .15s}
+  .nav a:hover{color:#fff;background:rgba(255,255,255,.05)}
+  .hright{display:flex;align-items:center;gap:16px}
+  .lang{display:flex;align-items:center;gap:7px;font-size:11px;font-weight:800;letter-spacing:1.6px;color:var(--mut);cursor:pointer;user-select:none}
+  .lang:hover{color:#fff}
+  .lang svg{width:15px;height:15px}
+  .btnred{display:inline-flex;align-items:center;justify-content:center;gap:9px;height:42px;padding:0 26px;border:none;border-radius:10px;
+    background:var(--red);color:#fff;font-family:'Montserrat';font-size:12px;font-weight:900;letter-spacing:1.8px;cursor:pointer;user-select:none;
+    transition:filter .15s,transform .15s,box-shadow .15s}
+  .btnred:hover{filter:brightness(1.1);box-shadow:0 6px 24px rgba(var(--acc),.35)}
+  .btnred:active{transform:scale(.97)}
+  .burger{display:none;width:40px;height:40px;border:none;background:transparent;cursor:pointer;color:#fff}
+  .burger svg{width:22px;height:22px}
+
+  /* ============ HERO ============ */
+  .hero{position:relative;padding:132px 0 84px;overflow:hidden}
+  .hero:before{content:'';position:absolute;left:50%;top:-260px;width:900px;height:560px;transform:translateX(-50%);
+    background:radial-gradient(closest-side,rgba(var(--acc),.16),transparent 72%);pointer-events:none}
+  .hero .wrap{display:grid;grid-template-columns:1.15fr 1fr;gap:56px;align-items:center}
+
+  /* CSS-мок лаунчера */
+  .mock{position:relative;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.1);
+    background:#0b0a10;box-shadow:0 30px 80px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.04),0 24px 90px rgba(var(--acc),.09);
+    transform:perspective(1400px) rotateY(-7deg) rotateX(2deg)}
+  .mock .mtop{height:44px;display:flex;align-items:center;gap:9px;padding:0 14px;background:#0e0d14;border-bottom:1px solid rgba(255,255,255,.07)}
+  .mock .mtop i{width:9px;height:9px;border-radius:50%;background:#2a2b31}
+  .mock .mtop i.r{background:var(--red);box-shadow:0 0 8px rgba(var(--acc),.8)}
+  .mock .murl{margin-left:8px;height:24px;flex:1;border-radius:6px;background:#12111a;color:#565b66;font-size:9px;
+    display:flex;align-items:center;padding:0 10px;letter-spacing:2px}
+  .mock .mbody{display:flex;height:380px}
+  .mock .mside{width:96px;background:#0a0910;border-right:1px solid rgba(255,255,255,.06);padding:12px 10px;display:flex;flex-direction:column;gap:4px}
+  .mock .mside .mi{height:26px;border-radius:6px;background:rgba(255,255,255,.05);display:flex;align-items:center;gap:6px;padding:0 8px}
+  .mock .mside .mi:first-child{background:var(--redsoft);box-shadow:inset 2px 0 0 var(--red)}
+  .mock .mside .mi i{width:8px;height:8px;border-radius:2px;background:#3a3b44}
+  .mock .mside .mi:first-child i{background:var(--red)}
+  .mock .mside .mi u{flex:1;height:6px;border-radius:4px;background:#23242c;text-decoration:none}
+  .mock .mmain{flex:1;padding:16px 14px;display:flex;flex-direction:column;gap:10px;min-width:0}
+  .mock .mhero{border-radius:10px;background:
+      radial-gradient(140px 60px at 20% 0%, rgba(var(--acc),.5), transparent 60%),
+      radial-gradient(180px 90px at 90% 20%, rgba(150,25,80,.4), transparent 70%),
+      linear-gradient(100deg,#3a0c18,#170409 70%);
+    height:88px;display:flex;flex-direction:column;justify-content:center;padding:0 16px;position:relative;overflow:hidden}
+  .mock .mhero:after{content:'';position:absolute;right:-30px;top:-40px;width:120px;height:120px;border:8px solid rgba(255,255,255,.08);border-radius:50%}
+  .mock .mhero b{font-family:'Anton',Impact,sans-serif;font-size:21px;color:#fff;letter-spacing:2px;transform:skewX(-8deg)}
+  .mock .mhero span{font-size:8.5px;font-weight:800;letter-spacing:2.6px;color:rgba(255,255,255,.65);margin-top:4px}
+  .mock .mraw{height:30px;border-radius:8px;background:#14131c;border:1px solid rgba(255,255,255,.06);
+    display:flex;align-items:center;gap:8px;padding:0 10px}
+  .mock .mraw .dot{width:5px;height:16px;border-radius:3px;background:#19c46a;box-shadow:0 0 6px rgba(46,204,113,.7)}
+  .mock .mraw u{flex:1;height:6px;border-radius:4px;background:#20212a;text-decoration:none}
+  .mock .mraw .pfnd{width:64px;height:18px;border-radius:6px;background:rgba(255,255,255,.07)}
+  .mock .mgo{margin-top:auto;height:44px;border-radius:10px;background:var(--red);display:flex;align-items:center;justify-content:center;
+    font-size:11px;font-weight:900;letter-spacing:3px;color:#fff;box-shadow:0 10px 30px rgba(var(--acc),.4);position:relative;overflow:hidden}
+  .mock .mgo:after{content:'';position:absolute;left:-40%;top:0;width:30%;height:100%;transform:skewX(-20deg);
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent);animation:mgo 2.6s ease infinite}
+  @keyframes mgo{from{left:-40%}to{left:130%}}
+
+  .hinfo .hbrand{display:flex;align-items:center;gap:14px;user-select:none}
+  .hinfo .hbrand b{font-family:'Anton',Impact,sans-serif;font-size:44px;letter-spacing:1px;transform:skewX(-8deg)}
+  .hinfo .hbrand .hpill{font-family:'Montserrat';font-weight:900;font-size:24px;color:#fff;background:var(--red);
+    padding:8px 20px;border-radius:12px;transform:skewX(-6deg);box-shadow:0 10px 30px rgba(var(--acc),.35)}
+  .hinfo h1{margin:22px 0 20px;font-size:22px;font-weight:900;letter-spacing:1.4px;line-height:1.45}
+  .ftitle{font-size:10.5px;font-weight:900;letter-spacing:3px;color:var(--accl);margin-bottom:16px}
+  .fex{display:flex;flex-direction:column;gap:14px;margin-bottom:26px}
+  .fex .fi p b{color:#fff;font-weight:800}
+  .fex .fi{display:flex;align-items:center;gap:14px}
+  .fex .fi .ic{width:38px;height:38px;border-radius:11px;background:var(--redsoft);border:1px solid rgba(var(--acc),.35);
+    display:flex;align-items:center;justify-content:center;flex:0 0 auto;color:var(--red)}
+  .fex .fi .ic svg{width:17px;height:17px}
+  .fex .fi p{font-size:14px;font-weight:600;color:#d6d9df;letter-spacing:.2px}
+  .hdown{display:flex;align-items:center;gap:22px;flex-wrap:wrap}
+  .hdown .ps{display:flex;flex-direction:column;gap:7px}
+  .hdown .ps b{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:800;letter-spacing:.3px}
+  .hdown .ps b svg{width:16px;height:16px;color:var(--red)}
+  .hdown .ps a{font-size:12px;color:var(--mut);text-decoration:underline;text-underline-offset:3px}
+  .hdown .ps a:hover{color:#fff}
+  .hnote{margin-top:26px;font-size:12.5px;color:var(--mut);letter-spacing:.2px}
+  .hnote a{color:#d9dce2;text-decoration:underline;text-underline-offset:3px}
+  .hnote a:hover{color:var(--red)}
+
+  /* ============ ПЛИТКИ CRIMSON ============ */
+  .plate{padding:26px 0 10px}
+  .plate .row{display:grid;grid-template-columns:repeat(7,1fr);gap:14px;max-width:1180px;margin:0 auto;padding:0 24px}
+  .pc{position:relative;height:400px;border-radius:14px;overflow:hidden;cursor:pointer;
+    background:linear-gradient(180deg,#141318 0%,#0b0a10 100%);border:1px solid rgba(255,255,255,.07);
+    display:flex;align-items:flex-end;justify-content:center;padding-bottom:26px;
+    transition:transform .25s ease,border-color .2s,box-shadow .25s}
+  .pc b{font-family:'Anton',Impact,sans-serif;font-size:110px;line-height:1;color:rgba(255,255,255,.13);transform:skewX(-10deg);
+    transition:color .25s}
+  .pc:hover{transform:translateY(-10px);border-color:rgba(var(--acc),.55);box-shadow:0 20px 50px rgba(var(--acc),.15)}
+  .pc:hover b{color:rgba(var(--acc),.4)}
+  .pc.act{background:linear-gradient(180deg,rgb(var(--acc)) 0%,var(--acc2) 60%,var(--acc3) 100%);border-color:transparent;
+    box-shadow:0 26px 70px rgba(var(--acc),.4)}
+  .pc.act b{position:absolute;left:50%;top:26px;transform:translateX(-50%) skewX(-10deg);color:rgba(255,255,255,.9);font-size:30px;letter-spacing:3px;white-space:nowrap}
+  .pc .go{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:14px}
+  .pc .go .pl{width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,.14);
+    box-shadow:inset 0 0 0 2px rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;transition:transform .2s}
+  .pc.act:hover .pl{transform:scale(1.09)}
+  .pc .go .pl svg{width:24px;height:24px;color:#fff;margin-left:4px}
+  .pc .go span{font-size:11px;font-weight:900;letter-spacing:3px;color:#fff;text-align:center;line-height:1.6}
+
+  /* ============ СЕКЦИИ ============ */
+  .sec{padding:76px 0}
+  .shead{display:flex;align-items:center;gap:18px;margin-bottom:38px}
+  .shead h2{font-size:24px;font-weight:900;letter-spacing:2.4px}
+  .shead p{font-size:13px;color:var(--mut);margin-top:6px;letter-spacing:.3px}
+  .shead .sp{margin-left:auto}
+  .btnghost{display:inline-flex;align-items:center;justify-content:center;height:44px;padding:0 22px;border-radius:10px;
+    border:1px solid rgba(255,255,255,.2);background:transparent;color:#fff;font-size:11.5px;font-weight:800;letter-spacing:1.8px;
+    cursor:pointer;user-select:none;transition:border-color .15s,background .15s}
+  .btnghost:hover{border-color:var(--red);background:var(--redsoft)}
+
+  /* об авторе */
+  .about{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .acard{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:26px 24px;transition:border-color .2s,transform .2s}
+  .acard:hover{border-color:rgba(var(--acc),.5);transform:translateY(-4px)}
+  .acard .ic{width:44px;height:44px;border-radius:12px;background:var(--redsoft);border:1px solid rgba(var(--acc),.35);
+    display:flex;align-items:center;justify-content:center;color:var(--red);margin-bottom:18px}
+  .acard .ic svg{width:20px;height:20px}
+  .acard h3{font-size:15px;font-weight:800;letter-spacing:.6px;margin-bottom:9px}
+  .acard p{font-size:13px;line-height:1.75;color:var(--mut)}
+  .acard p b{color:#e6e8ee}
+
+  /* ===== CINEMA-гайд: один большой экран-«видео» ===== */
+  .cinema{max-width:1010px;margin:0 auto}
+  .cx{position:relative;height:472px;border-radius:22px;border:1px solid var(--line);overflow:hidden;
+    background:linear-gradient(180deg,#16151c,#0b0a10);box-shadow:0 30px 70px rgba(0,0,0,.45)}
+  .chr{position:absolute;left:0;right:0;top:0;height:42px;display:flex;align-items:center;gap:12px;
+    padding:0 18px;border-bottom:1px solid rgba(255,255,255,.07);background:rgba(10,9,13,.6);z-index:2}
+  .chr .lg{font-family:'Anton',Impact,sans-serif;font-size:14.5px;letter-spacing:1px;transform:skewX(-8deg);color:#fff}
+  .chr .lg em{font-style:normal;color:var(--red)}
+  .chr .ob{display:flex;align-items:center;gap:6px;font-size:7.5px;font-weight:800;letter-spacing:1.2px;color:#9aa3ad}
+  .chr .ob i{width:5px;height:5px;border-radius:50%;background:#2ecc71;box-shadow:0 0 6px rgba(46,204,113,.9)}
+  .chr .nv{margin-left:10px;display:flex;gap:13px}
+  .chr .nv span{font-size:7.5px;font-weight:800;letter-spacing:1.3px;color:#8d929b}
+  .chr .nv span:first-child{color:#e8eaef}
+  .chr .hr{margin-left:auto;display:flex;align-items:center;gap:10px}
+  .chr .ln{font-size:7px;font-weight:800;letter-spacing:1px;color:#8d929b}
+  .chr .en{height:21px;padding:0 11px;border-radius:6px;background:var(--red);color:#fff;font-size:7px;font-weight:900;letter-spacing:1.3px;display:flex;align-items:center}
+  .vhp{position:absolute;inset:0;animation:vfadeA 14s linear infinite}
+  .vgrid{position:absolute;left:20px;right:20px;top:58px;bottom:56px;display:grid;grid-template-columns:.92fr 1.08fr;gap:24px;align-items:center}
+  .vmock{height:326px;background:#0e0d13;border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
+  .vmtop{height:24px;display:flex;align-items:center;gap:5px;padding:0 10px;border-bottom:1px solid rgba(255,255,255,.06);background:#131118}
+  .vmtop i{width:6px;height:6px;border-radius:50%;background:#26232c}
+  .vmtop i.r{background:var(--red)}
+  .vmtop span{margin:0 auto;font-size:6.5px;font-weight:900;letter-spacing:2.6px;color:#5f646e}
+  .vmbody{flex:1;display:flex}
+  .vms{width:54px;border-right:1px solid rgba(255,255,255,.05);padding:12px 8px;display:flex;flex-direction:column;gap:10px}
+  .vmi{display:flex;align-items:center;gap:6px}
+  .vmi i{width:7px;height:7px;border-radius:2px;background:#2c2933;flex:0 0 auto}
+  .vmi u{display:block;height:5px;border-radius:3px;background:#232028;flex:1}
+  .vmm{flex:1;padding:13px}
+  .vmh{display:flex;align-items:baseline;gap:7px}
+  .vmh b{font-family:'Anton',Impact,sans-serif;font-size:13.5px;letter-spacing:.8px;color:#fff}
+  .vmh span{font-size:6.5px;font-weight:800;letter-spacing:1.6px;color:#59d38b}
+  .vmr{margin-top:9px;display:flex;align-items:center;gap:6px}
+  .vmr i{width:4px;height:4px;border-radius:50%;background:#6f7480;flex:0 0 auto}
+  .vmr u{display:block;height:6px;border-radius:3px;background:#191820}
+  .vmgo{margin-top:13px;height:31px;border-radius:8px;background:var(--red);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:900;letter-spacing:2.6px;color:#fff}
+  .vhi{display:flex;flex-direction:column;gap:9px}
+  .vhb{display:flex;align-items:center;gap:8px}
+  .vhb b{font-family:'Anton',Impact,sans-serif;font-size:21px;letter-spacing:1.2px;transform:skewX(-8deg);color:#fff}
+  .vhb b em{font-style:normal;color:var(--red)}
+  .vhb span{height:17px;padding:0 9px;border-radius:5px;background:var(--redsoft);border:1px solid rgba(var(--acc),.35);color:var(--accl);font-size:6.5px;font-weight:900;letter-spacing:1.8px;display:flex;align-items:center}
+  .vh1{font-size:17.5px;font-weight:900;letter-spacing:1.2px;line-height:1.32;margin-top:2px}
+  .vft{font-size:6.8px;font-weight:900;letter-spacing:3px;color:#6f7480}
+  .vpt{display:flex;flex-direction:column;gap:6px;margin-top:3px}
+  .vpi{display:flex;gap:7px;align-items:flex-start}
+  .vpi .ic{width:16px;height:16px;border-radius:5px;background:var(--redsoft);border:1px solid rgba(var(--acc),.35);display:flex;align-items:center;justify-content:center;color:var(--red);flex:0 0 auto}
+  .vpi .ic svg{width:8.5px;height:8.5px}
+  .vpi p{margin:0;font-size:7.3px;line-height:1.6;color:#9aa3ad}
+  .vpi p b{color:#e8eaef}
+  .vdlrow{display:flex;align-items:center;gap:12px;margin-top:6px}
+  .vbtn{height:36px;padding:0 19px;border-radius:9px;background:var(--red);color:#fff;font-size:10.5px;font-weight:900;letter-spacing:2px;display:flex;align-items:center;gap:8px;transform-origin:55% 50%;animation:vbtnA 14s ease infinite;box-shadow:0 10px 26px rgba(var(--acc),.3)}
+  .vbtn svg{width:11px;height:11px}
+  .vlinks{display:flex;flex-direction:column;gap:4px;font-size:7.2px;font-weight:700;color:#8d929b;letter-spacing:.3px}
+  .vlinks b{color:#e8eaef;font-size:7.6px}
+  /* страница загрузки (копия download) */
+  .vdl{position:absolute;inset:0;background:linear-gradient(180deg,#16151c,#0b0a10);opacity:0;z-index:4;animation:vdlA 14s linear infinite}
+  .vdlt{position:absolute;left:50%;top:11%;transform:translateX(-50%);text-align:center}
+  .vdlt b{font-size:15.5px;font-weight:900;letter-spacing:2.6px}
+  .vdlt p{font-size:7.5px;color:#8d929b;margin-top:5px;letter-spacing:.4px}
+  .vcards{position:absolute;left:50%;top:40%;transform:translateX(-50%);display:flex;gap:16px}
+  .vcard{width:238px;border-radius:16px;background:#17161f;border:1px solid var(--line);padding:16px}
+  .vcard.w{animation:vcardA 14s ease infinite}
+  .vcard .pk{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;margin-bottom:11px}
+  .vcard.w .pk{background:linear-gradient(135deg,#4cc2ff,#0e6fd8);box-shadow:0 8px 22px rgba(76,194,255,.3)}
+  .vcard.a .pk{background:linear-gradient(135deg,rgb(var(--acc)),var(--acc2));box-shadow:0 8px 22px rgba(var(--acc),.3)}
+  .vcard .pk svg{width:15px;height:15px;color:#fff}
+  .vcard .pn{font-size:11.5px;font-weight:900;letter-spacing:1.8px}
+  .vcard.w .pn{color:#4cc2ff}
+  .vcard.a .pn{color:var(--accl)}
+  .vcard .pd{font-size:7.4px;color:#9aa3ad;line-height:1.65;margin-top:6px}
+  .vcard .pb{margin-top:12px;height:28px;border-radius:8px;border:1px solid var(--line);color:#cfd3da;font-size:8.5px;font-weight:900;letter-spacing:1.7px;display:flex;align-items:center;justify-content:center;transform-origin:60% 50%}
+  .vcard.w .pb{border-color:rgba(76,194,255,.6);color:#bfe4ff;animation:vwbtnA 14s ease infinite}
+  /* панель загрузки (стиль браузера Windows) */
+  .vbar{position:absolute;left:0;right:0;bottom:0;height:54px;display:flex;align-items:center;gap:12px;padding:0 18px;
+    background:rgba(13,12,17,.97);border-top:1px solid rgba(255,255,255,.09);z-index:6;transform:translateY(120%);
+    animation:vbarA 14s cubic-bezier(.2,.8,.2,1) infinite}
+  .vbar .pico{width:27px;height:27px;border-radius:7px;background:linear-gradient(135deg,rgb(var(--acc)),var(--acc2));display:flex;align-items:center;justify-content:center;flex:0 0 auto;box-shadow:0 6px 16px rgba(var(--acc),.3)}
+  .vbar .pico svg{width:12px;height:12px;color:#fff}
+  .vbar .fmeta{display:flex;flex-direction:column;gap:3px;min-width:150px}
+  .vbar .fn{font-size:9px;font-weight:800;color:#e8eaef;letter-spacing:.3px}
+  .vbar .fs{font-size:6.8px;color:#6f7480;letter-spacing:.5px}
+  .vbar .tr{flex:1;height:7px;border-radius:4px;background:#201e27;overflow:hidden}
+  .vbar .tr b{display:block;height:100%;width:0;border-radius:4px;background:linear-gradient(90deg,var(--red),#ff6b7d);animation:vfill 14s cubic-bezier(.3,.1,.3,1) infinite}
+  .vbar .pct{width:46px;text-align:right;font-size:10px;font-weight:900;color:#fff;flex:0 0 auto}
+  .vbar .pct::after{content:"0%";animation:vbytes 14s steps(1) infinite}
+  /* окно установщика */
+  .vwin{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);width:380px;background:#141318;border:1px solid var(--line);
+    border-radius:14px;overflow:hidden;box-shadow:0 26px 64px rgba(0,0,0,.65);z-index:7;opacity:0;animation:vwinA 14s cubic-bezier(.2,.9,.3,1) infinite}
+  .vwt{height:30px;display:flex;align-items:center;gap:8px;padding:0 12px;background:#191821;border-bottom:1px solid rgba(255,255,255,.06)}
+  .vwt .ti{width:13px;height:13px;border-radius:4px;background:linear-gradient(135deg,rgb(var(--acc)),var(--acc2))}
+  .vwt b{font-size:8.5px;font-weight:800;color:#e8eaef;letter-spacing:.4px}
+  .vwt .xx{margin-left:auto;color:#6f7480;font-size:10px;font-weight:900}
+  .vwb{position:relative;height:150px}
+  .vw1,.vw2,.vw3{position:absolute;inset:15px 16px;text-align:left}
+  .vw1{opacity:1;animation:vwA1 14s linear infinite}
+  .vw1 p{font-size:8.6px;color:#cfd3da;line-height:1.65;margin:0}
+  .vwr{margin-top:11px;display:flex;flex-direction:column;gap:6px}
+  .vrow{display:flex;justify-content:space-between;font-size:7.5px;color:#8d929b}
+  .vrow b{color:#cfd3da;font-weight:700}
+  .vw2{opacity:0;animation:vwA2 14s linear infinite}
+  .vw2 .ws{display:flex;justify-content:space-between;font-size:7.5px;color:#8d929b;margin-bottom:6px}
+  .vw2 .ws b{color:#e8eaef}
+  .vw2 .tr{height:9px;border-radius:5px;background:#201e27;overflow:hidden}
+  .vw2 .tr b{display:block;height:100%;width:0;border-radius:5px;background:linear-gradient(90deg,var(--red),#ff6b7d);animation:vwfill 14s linear infinite}
+  .vw2 .fp{margin-top:9px;font-size:7px;color:#6f7480;letter-spacing:.4px}
+  .vw3{opacity:0;text-align:center;animation:vwA3 14s linear infinite}
+  .vw3 .vs{width:36px;height:36px;border-radius:50%;background:rgba(46,204,113,.14);border:1px solid rgba(46,204,113,.5);display:flex;align-items:center;justify-content:center;margin:3px auto 9px}
+  .vw3 .vs svg{width:17px;height:17px;color:#59d38b}
+  .vw3 p{font-size:9.5px;font-weight:800;color:#e8eaef;letter-spacing:.4px;margin:0}
+  .vw3 span{display:block;font-size:7.3px;color:#8d929b;margin-top:5px}
+  .vwc{position:absolute;left:16px;bottom:13px;height:28px;padding:0 13px;border-radius:8px;border:1px solid var(--line);color:#9aa3ad;font-size:8.5px;font-weight:800;letter-spacing:1px;display:flex;align-items:center}
+  .vwbtn{position:absolute;right:16px;bottom:13px;height:28px;padding:0 17px;border-radius:8px;background:var(--red);color:#fff;
+    font-size:8.5px;font-weight:900;letter-spacing:1.5px;display:flex;align-items:center;transform-origin:70% 50%;animation:vwbtnA 14s ease infinite}
+  .vwbtn::before{content:"УСТАНОВИТЬ";animation:vwbtnT 14s steps(1) infinite}
+  /* курсор, обрыв, легенда */
+  .vc{position:absolute;left:60%;top:86%;width:19px;height:26px;z-index:80;pointer-events:none;opacity:.95;animation:vcur 14s linear infinite}
+  .vc path{filter:drop-shadow(0 2px 5px rgba(0,0,0,.55))}
+  .vcover{position:absolute;inset:0;background:#151318;z-index:90;opacity:0;pointer-events:none;animation:vcoverA 14s linear infinite}
+  .cstage{display:flex;gap:10px;justify-content:center;margin-top:16px;flex-wrap:wrap}
+  .crumb{display:flex;align-items:center;gap:8px;padding:9px 16px;border-radius:999px;background:#151419;border:1px solid var(--line);
+    font-size:10.5px;font-weight:800;letter-spacing:1.3px;color:#5f646e;transition:none}
+  .crumb b{width:20px;height:20px;border-radius:6px;background:#1e1d26;display:flex;align-items:center;justify-content:center;font-size:9px;color:#8d929b}
+  .cr1{animation:crA1 14s linear infinite}
+  .cr2{animation:crA2 14s linear infinite}
+  .cr3{animation:crA3 14s linear infinite}
+  .cr4{animation:crA4 14s linear infinite}
+  .ccap{margin-top:14px;text-align:center;font-size:12.5px;line-height:1.8;color:var(--mut)}
+  .ccap b{color:#e6e8ee}
+
+  @keyframes vfadeA{0%,7.2%{opacity:1;transform:none}8.4%,80.4%{opacity:0;transform:translateX(-12px)}82%,100%{opacity:1;transform:none}}
+  @keyframes vdlA{0%,7.6%{opacity:0}9%,67%{opacity:1;transform:none}68.2%,100%{opacity:0}}
+  @keyframes vbtnA{0%,6.2%{transform:scale(1);filter:none}6.6%{transform:scale(.92);filter:brightness(1.4)}7%{transform:scale(1);filter:brightness(1.15)}8.2%,91%{transform:scale(1);filter:none}94%,100%{opacity:1}}
+  @keyframes vcardA{0%,10.8%{border-color:var(--line);box-shadow:none;transform:scale(1)}11.2%{transform:scale(.975);border-color:rgba(76,194,255,.8)}12%,67%{transform:scale(1);border-color:rgba(76,194,255,.55);box-shadow:0 0 0 1px rgba(76,194,255,.25) inset,0 10px 30px rgba(76,194,255,.12)}68.2%,100%{opacity:0}}
+  @keyframes vwbtnA{0%,5.8%{transform:scale(1)}6.4%{transform:scale(.9)}7%,10.4%{transform:scale(1)}11.2%{transform:scale(.9)}11.8%,40.6%{transform:scale(1)}41.2%{transform:scale(.9)}42%,62.2%{transform:scale(1)}62.8%{transform:scale(.92)}63.6%,91%{transform:scale(1)}94%,100%{opacity:1}}
+  @keyframes vbarA{0%,12.2%{transform:translateY(120%);opacity:0}14%,66.6%{transform:translateY(0);opacity:1}68.4%,100%{transform:translateY(120%);opacity:0}}
+  @keyframes vfill{0%,14%{width:0}18%{width:27%}23%{width:54%}28%{width:77%}33%,66.4%{width:100%}100%{width:0}}
+  @keyframes vbytes{0%,13.8%{content:"0%"}18.2%{content:"27%"}23.2%{content:"54%"}28.2%{content:"77%"}33%,95%{content:"100%"}100%{content:"0%"}}
+  @keyframes vwinA{0%,38%{opacity:0;transform:translate(-50%,-46%) scale(.94)}40%,66.4%{opacity:1;transform:translate(-50%,-50%) scale(1)}68.2%,100%{opacity:0;transform:translate(-50%,-50%) scale(1)}}
+  @keyframes vwA1{0%,40.4%{opacity:1}42%,95%{opacity:0}96%,100%{opacity:1}}
+  @keyframes vwA2{0%,42.8%{opacity:0}44%,57.2%{opacity:1}58.4%,95%{opacity:0}}
+  @keyframes vwA3{0%,58.4%{opacity:0}60%,66.4%{opacity:1}68%,95%{opacity:0}}
+  @keyframes vwfill{0%,43.8%{width:0}48%{width:38%}52%{width:53%}56%{width:86%}57.4%,66.4%{width:100%}100%{width:0}}
+  @keyframes vwpc{0%,44%{content:"0%"}48.2%{content:"38%"}52.2%{content:"53%"}56.2%{content:"86%"}57.6%,95%{content:"100%"}}
+  .vw2 .p2::after{content:"0%";animation:vwpc 14s steps(1) infinite}
+  @keyframes vwbtnT{0%,57.4%{content:"УСТАНОВИТЬ"}58%,66.4%{content:"ЗАВЕРШИТЬ"}67%,100%{content:"УСТАНОВИТЬ"}}
+  @keyframes vcur{
+    0%,1.5%{left:55%;top:80%;opacity:.95;transform:none}
+    4%{left:51%;top:70%}
+    6.4%{transform:scale(.8) translate(-2px,2px)}
+    7.8%{transform:none}
+    9.8%{left:36%;top:67%}
+    11.4%{transform:scale(.8) translate(-2px,2px)}
+    13.2%{transform:none}
+    30%{left:88%;top:80%;opacity:.4}
+    34.6%{left:61.5%;top:57%;opacity:.95}
+    41.2%{left:61.5%;top:57%;transform:scale(.8) translate(-2px,2px)}
+    42.8%{left:61.5%;top:57%;transform:none}
+    55%{left:88%;top:80%;opacity:.4}
+    58.6%{left:61.5%;top:57%;opacity:.95}
+    63%{left:61.5%;top:57%;transform:scale(.8) translate(-2px,2px)}
+    64.8%{left:61.5%;top:57%;transform:none}
+    66.5%,94.5%{opacity:0}
+    97.5%,100%{left:55%;top:80%;opacity:.95;transform:none}}
+  @keyframes vcoverA{0%,67.4%{opacity:0}68.6%,85.8%{opacity:1}87%{opacity:0}}
+  @keyframes crA1{0%,7.4%{border-color:rgba(var(--acc),.6);background:var(--redsoft);color:#fff}8%,100%{border-color:var(--line);background:#151419;color:#5f646e}}
+  @keyframes crA2{0%,7.9%{border-color:var(--line);background:#151419;color:#5f646e}8%,12.1%{border-color:rgba(var(--acc),.6);background:var(--redsoft);color:#fff}12.6%,100%{border-color:var(--line);background:#151419;color:#5f646e}}
+  @keyframes crA3{0%,12.6%{border-color:var(--line);background:#151419;color:#5f646e}13.2%,37.9%{border-color:rgba(var(--acc),.6);background:var(--redsoft);color:#fff}38.4%,100%{border-color:var(--line);background:#151419;color:#5f646e}}
+  @keyframes crA4{0%,38.4%{border-color:var(--line);background:#151419;color:#5f646e}39%,66.9%{border-color:rgba(var(--acc),.6);background:var(--redsoft);color:#fff}67.5%,100%{border-color:var(--line);background:#151419;color:#5f646e}}
+
+  @media (max-width:760px){
+    .cx{height:420px}
+    .vgrid{grid-template-columns:1fr;gap:12px;top:48px;bottom:60px;overflow:hidden}
+    .vmock{display:none}
+    .vh1{font-size:14px}
+    .vwin{width:88%;min-width:0}
+    .vcard{width:44%}
+    .vcards{gap:10px}
+    .themes{right:8px;padding:7px 5px;gap:8px}
+    .thd{width:13px;height:13px}
+  }
+
+  /* ===== ВЫБОР ПЛАТФОРМЫ ===== */
+  .ptabs{display:flex;gap:10px;justify-content:center;margin-bottom:24px;flex-wrap:wrap}
+  .ptab{height:48px;padding:0 28px;border-radius:13px;border:1px solid var(--line);background:#16151c;color:#9aa3ad;
+    font:900 12px 'Montserrat',Arial,sans-serif;letter-spacing:2.4px;cursor:pointer;display:inline-flex;align-items:center;gap:10px}
+  .ptab svg{width:16px;height:16px}
+  .ptab.on{background:var(--red);border-color:var(--red);color:#fff;box-shadow:0 12px 30px rgba(var(--acc),.35)}
+
+  /* ===== выбор платформы — модалка вместо отдельной страницы ===== */
+  .pmodal{position:fixed;inset:0;z-index:90;display:flex;align-items:center;justify-content:center;padding:22px}
+  .pmodal[hidden]{display:none}
+  .pmodal .bgl{position:absolute;inset:0;background:rgba(5,5,7,.74);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px)}
+  .pmodal .pmx{position:relative;width:100%;max-width:840px}
+  .pmx .pmtop{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+  .pmx .pmt{flex:1;color:#fff;font-size:21px;font-weight:900;letter-spacing:.6px}
+  .pmx .pmxcls{width:38px;height:38px;border-radius:11px;background:var(--card);border:1px solid var(--line);color:#aab1bb;font-size:14px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+  .pmx .pmxcls:hover{color:#fff;border-color:rgba(255,255,255,.24)}
+  .pgridm{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .pmcard{position:relative;border-radius:18px;border:1px solid var(--line);background:var(--card);
+    padding:22px 20px 18px;cursor:pointer;text-align:left;color:#dfe3e8;width:100%;
+    font:inherit;transition:transform .15s,box-shadow .15s,border-color .15s}
+  .pmcard:hover{transform:translateY(-3px)}
+  .pmcard.and{border-top:3px solid #3ddc84}
+  .pmcard.and:hover{box-shadow:0 18px 44px rgba(61,220,132,.16)}
+  .pmcard.win{border-top:3px solid #4cc2ff}
+  .pmcard.win:hover{box-shadow:0 18px 44px rgba(76,194,255,.18)}
+  .pmcard .bic{height:58px;display:flex;align-items:center}
+  .pmcard .bic svg{width:48px;height:48px}
+  .pmcard .pn{font-size:15px;font-weight:900;letter-spacing:1.4px;margin:8px 0}
+  .pmcard .pm{font-size:12.5px;line-height:1.55;color:#9aa2ac;margin-bottom:12px}
+  .pmcard .tag{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:15px}
+  .pmcard .tag i{font-style:normal;font-size:9.5px;font-weight:800;letter-spacing:1px;color:#b9c0c9;background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:7px;padding:4px 8px}
+  .pmcard .go{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:900;letter-spacing:1.2px;color:#fff;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);border-radius:11px;padding:10px 14px}
+  .pmcard .go svg{width:13px;height:13px}
+  @media (max-width:700px){ .pgridm{grid-template-columns:1fr} .pmodal{padding:14px} .pmx .pmt{font-size:17px} }
+
+  /* ===== ЦВЕТОВЫЕ ТЕМЫ: точки справа ===== */
+  .themes{position:fixed;right:14px;top:50%;transform:translateY(-50%);z-index:60;display:flex;flex-direction:column;
+    align-items:center;gap:9px;padding:9px 6px;border-radius:14px;background:rgba(15,14,19,.55);
+    border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+  .thd{width:15px;height:15px;border-radius:50%;border:0;cursor:pointer;padding:0;display:block;
+    background:rgb(var(--c));box-shadow:0 0 10px rgba(var(--c),.45);transition:transform .18s ease,box-shadow .18s ease}
+  .thd:hover{transform:scale(1.18)}
+  .thd.on{transform:scale(1.42);box-shadow:0 0 0 2px rgba(255,255,255,.22),0 0 16px rgba(var(--c),.6)}
+
+  /* ===== ANDROID-гайд: вертикальная «запись экрана» ===== */
+  .android{max-width:1010px;margin:0 auto;display:flex;flex-direction:column;align-items:center}
+  .android[hidden]{display:none}
+  .acx{position:relative;width:min(304px,88vw);aspect-ratio:9/16;background:#0b0a10;border:1px solid var(--line);
+    border-radius:26px;overflow:hidden;box-shadow:0 30px 70px rgba(0,0,0,.45)}
+  .as{position:absolute;inset:0;display:flex;flex-direction:column}
+  .asite{z-index:3;animation:akSite 12s linear infinite}
+  .adlpg{z-index:2;animation:akDl 12s linear infinite}
+  .aapk{z-index:1;animation:akApk 12s linear infinite}
+  .astat{height:30px;display:flex;align-items:center;padding:0 16px;font-size:10.5px;font-weight:600}
+  .astat .asr{margin-left:auto;display:flex;align-items:center;gap:7px}
+  .astat svg{width:11px;height:11px}
+  .astat .abat{min-width:26px;height:14px;border:1px solid currentColor;border-radius:3px;display:inline-flex;
+    align-items:center;justify-content:center;font-size:8px;font-weight:800;padding:0 3px;opacity:.9}
+  .sbw{color:#fff}.sbd{color:#17181c}
+  /* мини-сайт (тёмный) */
+  .amh{height:42px;display:flex;align-items:center;padding:0 16px;border-bottom:1px solid rgba(255,255,255,.06)}
+  .amh b{font-family:'Anton',Impact,sans-serif;font-size:12.5px;letter-spacing:1px;transform:skewX(-8deg)}
+  .amh b i{font-style:normal;color:var(--red)}
+  .abur{margin-left:auto;display:flex;flex-direction:column;gap:3px}
+  .abur i{width:14px;height:2px;border-radius:1px;background:#cfd3da}
+  .ahero{flex:1;display:flex;flex-direction:column;padding:18px 18px 16px}
+  .apill{width:max-content;height:18px;padding:0 10px;border-radius:6px;background:var(--redsoft);border:1px solid rgba(var(--acc),.35);
+    display:inline-flex;align-items:center;font-size:6.5px;font-weight:900;letter-spacing:1.8px;color:var(--accl)}
+  .ahero h5{font-size:16.5px;font-weight:900;letter-spacing:1px;line-height:1.3;margin:10px 0 0}
+  .akick{margin-top:8px;font-size:6.8px;font-weight:900;letter-spacing:3px;color:#6f7480}
+  .afeats{margin-top:12px;display:flex;flex-direction:column;gap:8px}
+  .afeats span{display:flex;align-items:center;gap:7px;font-size:8.6px;font-weight:700;color:#9aa3ad;letter-spacing:.4px}
+  .afeats span:before{content:'';width:4px;height:4px;border-radius:50%;background:var(--red);flex:0 0 auto}
+  .abtn{margin-top:auto;height:50px;border-radius:12px;background:var(--red);display:flex;align-items:center;justify-content:center;
+    font-size:11.5px;font-weight:900;letter-spacing:2.4px;color:#fff;box-shadow:0 12px 28px rgba(var(--acc),.3);
+    transform-origin:50% 55%;animation:akPs1 12s ease infinite}
+  .anote{margin-top:9px;text-align:center;font-size:6.8px;font-weight:800;letter-spacing:1.6px;color:#5f646e}
+  /* страница загрузки (тёмная) */
+  .adlt{padding:16px 18px 8px}
+  .adlt b{display:block;font-size:15px;font-weight:900;letter-spacing:2px}
+  .adlt span{display:block;margin-top:5px;font-size:8.5px;color:#8d929b;letter-spacing:.6px}
+  .acards{flex:1;display:flex;flex-direction:column;gap:10px;padding:10px 16px 18px}
+  .acard{border-radius:13px;border:1px solid var(--line);background:#17161f;padding:13px 14px;display:flex;flex-direction:column;
+    transform-origin:50% 60%}
+  .acard .pkh{display:flex;align-items:center;gap:10px}
+  .acard .apkico{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center}
+  .acard .apkico svg{width:15px;height:15px;color:#fff}
+  .acard b{font-size:11px;font-weight:900;letter-spacing:1.6px}
+  .acard i{display:block;margin-top:8px;font-size:8.2px;font-style:normal;color:#8d929b;letter-spacing:.5px}
+  .acw .apkico{background:linear-gradient(135deg,#4cc2ff,#0e6fd8)}
+  .acw b{color:#4cc2ff}
+  .acnd{animation:akPs2 12s ease infinite}
+  .acnd .apkico{background:linear-gradient(135deg,rgb(var(--acc)),var(--acc2))}
+  .acnd b{color:var(--accl)}
+  /* браузерная загрузка + системное уведомление */
+  .adlb{position:absolute;left:14px;right:14px;bottom:12px;z-index:4;display:flex;align-items:center;gap:9px;
+    background:rgba(18,17,23,.97);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:9px 11px;opacity:0;
+    transform:translateY(120%);animation:akDlb 12s ease infinite}
+  .adlb .dic{width:26px;height:26px;border-radius:8px;background:linear-gradient(135deg,#43c463,#1f9e4a);display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .adlb .dic svg{width:12px;height:12px;color:#fff}
+  .adlb .fnw{display:flex;flex-direction:column;min-width:0;flex:0 1 auto}
+  .adlb .fn{display:block;font-size:8.6px;font-weight:800;color:#e8eaef;letter-spacing:.2px}
+  .adlb .ds{display:block;margin-top:2px;font-size:7.2px;color:#7a8290;letter-spacing:.4px}
+  .adlb .dtr{flex:1;height:5px;border-radius:3px;background:#2a2833;overflow:hidden}
+  .adlb .dtr b{display:block;height:100%;width:0;border-radius:3px;background:linear-gradient(90deg,#43c463,#7ee49a);animation:akDlf 12s linear infinite}
+  .adlb .dck{width:15px;height:15px;border-radius:50%;background:#2bb65a;color:#fff;font-size:8px;display:flex;align-items:center;justify-content:center;flex:0 0 auto;opacity:0;transform:scale(.4);animation:akDck 12s ease infinite}
+  .anot{position:absolute;left:10px;right:10px;top:36px;z-index:5;display:flex;align-items:center;gap:9px;
+    background:#fff;border-radius:13px;padding:9px 11px;box-shadow:0 12px 32px rgba(0,0,0,.38);opacity:0;
+    transform:translateY(-170%);animation:akNot 12s ease infinite}
+  .anot .ni{width:28px;height:28px;border-radius:8px;background:#4a90e2;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .anot .ni svg{width:12px;height:12px;color:#fff}
+  .anot .nt{min-width:0}
+  .anot .nt b{display:block;font-size:9px;font-weight:800;color:#17181c;letter-spacing:.1px}
+  .anot .nt i{display:block;margin-top:2px;font-size:7.6px;font-style:normal;color:#7d838e}
+  .anot .nc{margin-left:auto;color:#b6bac2;font-size:13px;font-weight:700;flex:0 0 auto}
+  /* системный установщик */
+  .ainst{position:absolute;inset:0;background:rgba(8,8,12,.4);z-index:6;opacity:0;animation:akDim 12s ease infinite}
+  .asheet{position:absolute;left:8px;right:8px;bottom:8px;background:#fff;border-radius:18px;padding:14px 16px 5px;
+    box-shadow:0 18px 44px rgba(0,0,0,.35);transform:translateY(112%);animation:akSheet 12s cubic-bezier(.2,.85,.25,1) infinite;
+    display:grid;grid-template-areas:'st'}
+  .asheah{grid-area:st;align-self:start;z-index:2;display:flex;align-items:center;gap:10px;padding-bottom:10px;border-bottom:1px solid #f1f2f5}
+  .aico{width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,rgb(var(--acc)),var(--acc2));color:#fff;
+    display:flex;align-items:center;justify-content:center;font:900 15px/1 'Montserrat',Arial,sans-serif}
+  .asheah b{font-size:14px;font-weight:700;color:#17181c;letter-spacing:.3px}
+  .ast{grid-area:st;display:flex;flex-direction:column;justify-content:flex-end;min-height:108px;padding-top:11px}
+  .st1{opacity:1;animation:akSt1 12s ease infinite}
+  .st2{opacity:0;animation:akSt2 12s ease infinite}
+  .st3{opacity:0;animation:akSt3 12s ease infinite}
+  .ast p{margin:0;font-size:12.8px;font-weight:600;color:#17181c;letter-spacing:.2px;line-height:1.45}
+  .arow{display:flex;align-items:center;justify-content:flex-end;gap:24px;height:42px;margin-top:2px}
+  .arow span{font-size:13px;font-weight:600;color:#90959e}
+  .arow span.ag{color:#2bb65a;transform-origin:70% 50%;animation:akPs4r 12s ease infinite}
+  .agf{height:31px;padding:0 17px;border-radius:9px;background:#2bb65a;color:#fff;font-size:12.5px;font-weight:600;display:flex;align-items:center;transform-origin:75% 50%;animation:akPs5r 12s ease infinite}
+  .st2 .arow{justify-content:center}
+  .st2 .arow span{color:#bec2c9}
+  .aprog{display:block;height:4px;border-radius:2px;background:#eceef1;overflow:hidden;margin:10px 0 0}
+  .aprog i{display:block;height:100%;width:4%;border-radius:2px;background:#2bb65a;animation:akAfill 12s linear infinite}
+  .st3 .arow{justify-content:flex-end}
+  /* тапы */
+  .atp{position:absolute;width:86px;height:86px;border-radius:50%;transform:scale(0);opacity:0;z-index:8;pointer-events:none}
+  .atp1{left:calc(50% - 43px);top:calc(88.9% - 43px);background:rgba(255,255,255,.4);animation:akTp1 12s linear infinite}
+  .atp2{left:calc(50% - 43px);top:calc(52% - 43px);background:rgba(255,255,255,.3);animation:akTp2 12s linear infinite}
+  .atp3{left:calc(50% - 43px);top:calc(11% - 43px);background:rgba(23,24,28,.16);animation:akTp3 12s linear infinite}
+  .atp4{left:calc(78.7% - 43px);top:calc(93.5% - 43px);background:rgba(11,93,44,.28);animation:akTp4 12s linear infinite}
+  .atp5{left:calc(76% - 43px);top:calc(94% - 43px);background:rgba(11,93,44,.22);animation:akTp5 12s linear infinite}
+  .ashut{position:absolute;inset:0;background:#050508;z-index:20;opacity:0;pointer-events:none;animation:akCut 12s linear infinite}
+  .acap{margin-top:16px;text-align:center;font-size:12.5px;line-height:1.8;color:var(--mut);max-width:640px}
+  .acap b{color:#e6e8ee}
+
+  @keyframes akSite{0%,8.4%{opacity:1}9.4%,97.4%{opacity:0}98.6%,100%{opacity:1}}
+  @keyframes akDl{0%,8.4%{opacity:0}9.4%,97.4%{opacity:1}98.6%,100%{opacity:0}}
+  @keyframes akDlb{0%,17.2%{opacity:0;transform:translateY(120%)}18.6%,89.8%{opacity:1;transform:translateY(0)}91.2%,100%{opacity:0;transform:translateY(120%)}}
+  @keyframes akDlf{0%,17.8%{width:0}19%{width:9%}20.6%{width:31%}21.8%{width:24%}23.4%{width:52%}24.8%{width:47%}26.4%{width:74%}27.6%{width:81%}28.6%{width:94%}29.4%,93.6%{width:100%}100%{width:0}}
+  @keyframes akDck{0%,29.4%{opacity:0;transform:scale(.4)}30.2%{opacity:1;transform:scale(1)}93.6%{opacity:1;transform:scale(1)}94.6%,100%{opacity:0;transform:scale(.4)}}
+  @keyframes akNot{0%,31.4%{opacity:0;transform:translateY(-170%)}32.4%{opacity:1;transform:translateY(7px)}33.4%,41.2%{opacity:1;transform:translateY(0)}42%,100%{opacity:0;transform:translateY(-170%)}}
+  @keyframes akDim{0%,41%{opacity:0}42.4%,91.4%{opacity:1}93%,100%{opacity:0}}
+  @keyframes akSheet{0%,41.4%{transform:translateY(112%)}43.8%,91.6%{transform:translateY(0)}93%,100%{transform:translateY(112%)}}
+  @keyframes akSt1{0%,55.2%{opacity:1}55.9%,94.6%{opacity:0}96%,100%{opacity:1}}
+  @keyframes akSt2{0%,56.6%{opacity:0}57.6%,79.2%{opacity:1}80.4%,100%{opacity:0}}
+  @keyframes akSt3{0%,79.2%{opacity:0}80.4%,90.2%{opacity:1}91.4%,100%{opacity:0}}
+  @keyframes akAfill{0%,56.4%{width:4%}58%{width:30%}60%{width:23%}63%{width:55%}65.6%{width:49%}69%{width:75%}72.6%{width:88%}76%,94%{width:97%}100%{width:4%}}
+  @keyframes akPs1{0%,4.2%{transform:scale(1);filter:none}4.6%{transform:scale(.95);filter:brightness(.88)}5.8%{transform:scale(1)}6.4%,100%{transform:scale(1);filter:none}}
+  @keyframes akPs2{0%,14.4%{transform:scale(1);border-color:var(--line)}14.8%{transform:scale(.965);border-color:rgba(var(--acc),.85)}16.6%,100%{transform:scale(1);border-color:var(--line)}}
+  @keyframes akPs4r{0%,54.8%{transform:scale(1)}55.1%{transform:scale(.9)}56.5%{transform:scale(1)}57.2%,100%{transform:scale(1)}}
+  @keyframes akPs5r{0%,88.4%{transform:scale(1)}88.8%{transform:scale(.93)}90.1%{transform:scale(1)}90.8%,100%{transform:scale(1)}}
+  @keyframes akTp1{0%,3.9%{transform:scale(0);opacity:0}4.4%{transform:scale(.25);opacity:.4}6.9%{transform:scale(1.15);opacity:0}7%,100%{transform:scale(0);opacity:0}}
+  @keyframes akTp2{0%,14.1%{transform:scale(0);opacity:0}14.6%{transform:scale(.25);opacity:.4}17.1%{transform:scale(1.15);opacity:0}17.2%,100%{transform:scale(0);opacity:0}}
+  @keyframes akTp3{0%,40.4%{transform:scale(0);opacity:0}40.8%{transform:scale(.25);opacity:.45}43.4%{transform:scale(1.2);opacity:0}43.5%,100%{transform:scale(0);opacity:0}}
+  @keyframes akTp4{0%,54.4%{transform:scale(0);opacity:0}54.8%{transform:scale(.28);opacity:.5}57.6%{transform:scale(1.2);opacity:0}57.7%,100%{transform:scale(0);opacity:0}}
+  @keyframes akTp5{0%,88%{transform:scale(0);opacity:0}88.4%{transform:scale(.28);opacity:.45}91%{transform:scale(1.2);opacity:0}91.1%,100%{transform:scale(0);opacity:0}}
+  @keyframes akCut{0%,92.4%{opacity:0}93.6%,98.6%{opacity:1}99.6%,100%{opacity:0}}
+
+  /* БАГИ И ПРЕДЛОЖЕНИЯ */
+  .fbcard{max-width:720px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:18px;
+    padding:20px 22px 18px;box-shadow:0 24px 60px rgba(0,0,0,.35)}
+  .fbkind{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:13px}
+  .fbkind span{height:37px;padding:0 15px;border-radius:10px;border:1px solid var(--line);background:#151419;
+    color:#8d929b;font:800 10.5px/37px 'Montserrat',Arial,sans-serif;letter-spacing:2.2px;cursor:pointer;
+    user-select:none;transition:border-color .15s,color .15s,background .15s}
+  .fbkind span:hover{color:#e6e8ee;border-color:rgba(255,255,255,.18)}
+  .fbkind span.on{background:rgba(var(--acc),.13);border-color:rgba(var(--acc),.6);color:var(--accl)}
+  .fbin{width:100%;height:46px;border-radius:12px;background:#0d0c12;border:1px solid rgba(255,255,255,.1);
+    color:var(--txt);font:600 13px 'Montserrat',Arial,sans-serif;padding:0 15px;outline:none;display:block;
+    transition:border-color .15s,box-shadow .15s}
+  .fbtx{width:100%;min-height:118px;border-radius:12px;background:#0d0c12;border:1px solid rgba(255,255,255,.1);
+    color:var(--txt);font:600 13px/1.65 'Montserrat',Arial,sans-serif;padding:12px 15px;outline:none;display:block;
+    resize:vertical;margin-top:12px;transition:border-color .15s,box-shadow .15s}
+  .fbin:focus,.fbtx:focus{border-color:rgba(var(--acc),.7);box-shadow:0 0 0 3px rgba(var(--acc),.12)}
+  .fbfoot{display:flex;align-items:center;gap:14px;margin-top:15px}
+  .fbstatus{font-size:11.5px;font-weight:600;color:var(--mut);line-height:1.5}
+  .fbfoot .btnred{height:46px;padding:0 24px;margin-left:auto;border-radius:11px;background:var(--red);
+    color:#fff;box-shadow:0 10px 28px rgba(var(--acc),.35)}
+  .fbin.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none}
+  .fbfoot .btnred:disabled{opacity:.6;cursor:wait}
+
+  /* FAQ */
+  .faq{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .fcard{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:26px 24px;transition:border-color .2s,transform .2s;cursor:pointer}
+  .fcard:hover{border-color:rgba(var(--acc),.5);transform:translateY(-4px)}
+  .fcard h4{font-size:14.5px;font-weight:800;letter-spacing:.4px;margin-bottom:12px}
+  .fcard p{font-size:12.5px;line-height:1.8;color:var(--mut)}
+  .fcard a,.fcard b{color:#e9dfe2;text-decoration:underline;text-underline-offset:3px}
+  .fcard code{display:inline-flex;align-items:center;gap:8px;margin-top:12px;height:34px;padding:0 14px;border-radius:8px;
+    background:#0d0c12;border:1px dashed rgba(var(--acc),.55);color:var(--accl);font-size:12px;font-weight:700;
+    font-family:Consolas,'Courier New',monospace;cursor:pointer;transition:border-color .15s,color .15s}
+  .fcard code:hover{border-color:var(--red);color:#fff}
+
+  /* подписка */
+  .sub{position:relative;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:34px 38px;
+    display:flex;align-items:center;gap:24px;overflow:hidden}
+  .sub:before{content:'';position:absolute;left:-120px;top:-120px;width:320px;height:320px;border-radius:50%;
+    background:radial-gradient(closest-side,rgba(var(--acc),.2),transparent)}
+  .sub .env{width:56px;height:56px;border-radius:14px;background:linear-gradient(135deg,rgb(var(--acc)),var(--acc2));
+    display:flex;align-items:center;justify-content:center;flex:0 0 auto;box-shadow:0 12px 34px rgba(var(--acc),.35)}
+  .sub .env svg{width:24px;height:24px;color:#fff}
+  .sub .st{flex:1;min-width:0}
+  .sub .st h3{font-size:19px;font-weight:900;letter-spacing:1.6px}
+  .sub .st p{margin-top:8px;font-size:13px;color:var(--mut);letter-spacing:.2px}
+  .sub .sform{display:flex;gap:10px;align-items:center}
+  .sub input{width:270px;height:48px;border-radius:11px;border:1px solid var(--line);background:#0d0c12;
+    color:#fff;font-family:'Montserrat';font-size:13px;font-weight:600;padding:0 16px;outline:none;transition:border-color .16s,box-shadow .16s}
+  .sub input:focus{border-color:rgba(var(--acc),.7);box-shadow:0 0 0 3px rgba(var(--acc),.12)}
+  .sub input::placeholder{color:#565b66;font-weight:500}
+  .sub .fine{margin-top:10px;font-size:10.5px;color:#5f646e;text-align:right}
+  .sub .fine button{all:unset;color:#9ba0aa;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+  .sub .fine button:hover{color:#fff}
+
+  /* футер */
+  .foot{border-top:1px solid var(--line);padding:56px 0 40px;background:#08080a}
+  .fgrid{display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:34px}
+  .fbrand b{font-family:'Anton',Impact,sans-serif;font-size:26px;letter-spacing:1.5px;transform:skewX(-8deg);display:inline-block}
+  .fbrand b em{font-style:normal;color:var(--red)}
+  .fbrand .cr{margin-top:16px;font-size:11px;color:#565b66;line-height:1.9}
+  .fcol h5{font-size:11px;font-weight:900;letter-spacing:2.4px;color:#fff;margin-bottom:16px}
+  .fcol a,.fcol span{display:block;font-size:12.5px;color:var(--mut);margin-bottom:11px;letter-spacing:.2px}
+  .fcol a:hover{color:#fff}
+  .fcol .lk{text-decoration:underline;text-underline-offset:3px}
+  .pays{display:flex;gap:10px;margin-bottom:14px}
+  .pays i{height:30px;min-width:52px;border-radius:7px;background:#141319;border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:900;letter-spacing:1.4px;color:#8d929b;font-style:normal;padding:0 10px}
+  .status{display:flex;align-items:center;gap:9px;font-size:11px;color:var(--mut);font-weight:600}
+  .status i{width:8px;height:8px;border-radius:50%;background:#2ecc71;box-shadow:0 0 8px rgba(46,204,113,.9);animation:blip 2s infinite}
+  .fbot{margin-top:44px;padding-top:22px;border-top:1px solid rgba(255,255,255,.05);
+    display:flex;align-items:center;justify-content:space-between;font-size:11px;color:#565b66}
+  .fbot b{color:#8d929b;letter-spacing:.4px}
+
+  /* тост */
+  .toast{position:fixed;left:50%;bottom:30px;transform:translateX(-50%) translateY(18px);z-index:99;
+    background:#141016;border:1px solid rgba(var(--acc),.5);border-radius:12px;color:#fff;
+    font-size:13px;font-weight:600;padding:13px 20px;opacity:0;pointer-events:none;
+    transition:opacity .25s,transform .25s;box-shadow:0 14px 44px rgba(0,0,0,.6)}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  .toast em{font-style:normal;color:var(--red)}
+
+  @media (max-width:1024px){
+    .nav{display:none}
+    .burger{display:block}
+    .hero .wrap{grid-template-columns:1fr;gap:40px}
+    .plate .row{grid-template-columns:repeat(4,1fr)}
+    .pc:nth-child(n+5){display:none}
+    .about,.faq{grid-template-columns:1fr}
+    .sub{flex-direction:column;align-items:flex-start}
+    .sub .sform{width:100%}
+    .sub input{flex:1;width:auto}
+    .fgrid{grid-template-columns:1fr 1fr}
+  }
+  .mobnav{display:none;position:fixed;left:0;right:0;top:72px;z-index:49;background:rgba(8,8,10,.98);
+    border-bottom:1px solid var(--line);padding:10px 16px 16px;flex-direction:column;gap:4px}
+  .mobnav a{padding:13px 14px;border-radius:10px;font-size:13px;font-weight:700;letter-spacing:1.4px;color:var(--mut)}
+  .mobnav a:active,.mobnav a:hover{background:rgba(255,255,255,.05);color:#fff}
+  .mobnav.open{display:flex}
+</style>
+</head>
+<body>
+
+<!-- ================= ШАПКА ================= -->
+<header class="head">
+  <div class="wrap">
+    <a class="logo" href="#top"><b>CRIMSON<em>RP</em></b></a>
+    <div class="obadge"><i></i>ИГРОКОВ: <b id="onlineCnt">16</b></div>
+    <nav class="nav">
+      <a href="download.html">СКАЧАТЬ</a>
+      <a href="#about">О ПРОЕКТЕ</a>
+      <a href="#howto">ИНСТРУКЦИЯ</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contacts">КОНТАКТЫ</a>
+    </nav>
+    <div class="hright">
+      <span class="lang" id="langBtn">РУССКИЙ
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 4 5.6 4 9s-1.5 6.4-4 9c-2.5-2.6-4-5.6-4-9s1.5-6.4 4-9z"/></svg>
+      </span>
+      <button class="btnred" id="loginBtn">ВОЙТИ</button>
+      <button class="burger" id="burger"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+</header>
+<div class="mobnav" id="mobnav">
+  <a href="download.html">СКАЧАТЬ</a><a href="#about">О ПРОЕКТЕ</a><a href="#howto">ИНСТРУКЦИЯ</a><a href="#faq">FAQ</a><a href="#contacts">КОНТАКТЫ</a>
+</div>
+
+<!-- ================= HERO ================= -->
+<section class="hero" id="top">
+  <div class="wrap">
+    <!-- мок лаунчера -->
+    <div class="mock" data-tilt>
+      <div class="mtop"><i class="r"></i><i></i><i></i><span class="murl">CRIMSONRP.LAUNCHER</span></div>
+      <div class="mbody">
+        <div class="mside">
+          <span class="mi"><i></i><u style="width:34px"></u></span>
+          <span class="mi"><i></i><u></u></span>
+          <span class="mi"><i></i><u style="width:26px"></u></span>
+          <span class="mi"><i></i><u style="width:40px"></u></span>
+          <span class="mi"><i></i><u style="width:22px"></u></span>
+          <span class="mi"><i></i><u style="width:36px"></u></span>
+        </div>
+        <div class="mmain">
+          <div class="mhero"><b>CRIMSON RP</b><span>СЕЙЧАС ИГРАЮТ · 16</span></div>
+          <div class="mraw"><span class="dot"></span><u style="width:56%"></u><span class="pfnd"></span></div>
+          <div class="mraw"><span class="dot"></span><u style="width:42%"></u><span class="pfnd"></span></div>
+          <div class="mraw"><span class="dot"></span><u style="width:64%"></u><span class="pfnd"></span></div>
+          <div class="mgo">ИГРАТЬ</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- текст -->
+    <div class="hinfo">
+      <div class="hbrand"><b>CRIMSON</b><span class="hpill">Лаунчер</span></div>
+      <h1>САМЫЙ БЫСТРЫЙ И УДОБНЫЙ СПОСОБ НАЧАТЬ ИГРУ</h1>
+      <p class="ftitle">КАК ЛУЧШЕ ВСЕГО НАЧАТЬ ИГРАТЬ</p>
+      <div class="fex">
+        <div class="fi">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20c.6-3.2 2.8-5 5.5-5s4.9 1.8 5.5 5" stroke-linecap="round"/><path d="M16.5 8.2a3 3 0 11.1 0" stroke-linecap="round"/></svg></span>
+          <p><b>Придумай персонажа заранее.</b> Ник в формате Имя_Фамилия и короткая история — так быстрее втягиваешься в отыгрыш</p>
+        </div>
+        <div class="fi">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4.5 11.5a11 11 0 0115 0" stroke-linecap="round"/><path d="M8 15a6.5 6.5 0 018 0" stroke-linecap="round"/><path d="M12 18.6h.01" stroke-linecap="round"/></svg></span>
+          <p><b>Первый запуск — по Wi-Fi.</b> Клиент один раз докачает кэш, дальше всё летает даже на мобильном интернете</p>
+        </div>
+        <div class="fi">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 3v5c0 4.8-3.2 8.3-7 10-3.8-1.7-7-5.2-7-10V6z" stroke-linejoin="round"/><path d="M9.4 11.8l2 2 3.4-3.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <p><b>Играй по правилам RP.</b> Отыгрывай роль, общайся и иди на контакт — так заводятся лучшие истории и знакомства</p>
+        </div>
+      </div>
+      <div class="hdown" id="download">
+        <a class="btnred" id="dlBtn" href="download.html">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11m0 0l-4-4m4 4l4-4"/><path d="M5 19h14"/></svg>
+          СКАЧАТЬ
+        </a>
+        <div class="ps">
+          <b><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 2h9l5 5v13a2 2 0 01-2 2H6a2 2 0 01-2-2V4a2 2 0 012-2z" opacity=".35"/><path d="M15 2l5 5h-5z" fill="#fff" opacity=".6"/></svg>Android и ПК — одна игра</b>
+          <a href="download.html">Гайд по установке — 4 шага</a>
+          <a id="sysreq" href="javascript:void(0)">Системные требования</a>
+        </div>
+      </div>
+      <p class="hnote">Проблемы с установкой? Посмотри <a href="#faq">FAQ</a> или напиши в <a href="#contacts">поддержку</a></p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ПЛИТКИ CRIMSON ================= -->
+<section class="plate">
+  <div class="row">
+    <div class="pc"><b>C</b></div>
+    <div class="pc"><b>R</b></div>
+    <div class="pc"><b>I</b></div>
+    <div class="pc act" data-goto><b>CRIMSON</b>
+      <span class="go">
+        <span class="pl"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+        <span>НАЧАТЬ<br>ИГРАТЬ</span>
+      </span>
+    </div>
+    <div class="pc"><b>S</b></div>
+    <div class="pc"><b>O</b></div>
+    <div class="pc"><b>N</b></div>
+  </div>
+</section>
+
+<!-- ================= О ПРОЕКТЕ ================= -->
+<section class="sec" id="about">
+  <div class="wrap">
+    <div class="shead">
+      <div><h2>О ПРОЕКТЕ</h2><p>Roleplay в классических декорациях San Andreas — с телефона или ПК, на одном сервере</p></div>
+    </div>
+    <div class="about">
+      <div class="acard">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17l6-6 4 3 7-8" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 6h4v4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <h3>Честная экономика</h3>
+        <p>Работы, бизнесы, автосалоны и семьи — экономика заточена под живую игру. <b>Стартовые бонусы</b> получают все новые персонажи.</p>
+      </div>
+      <div class="acard">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20c.6-3.2 2.8-5 5.5-5s4.9 1.8 5.5 5" stroke-linecap="round"/><path d="M16 8.2a3 3 0 11.1 0M17.5 15c2.2.4 3.6 2 4 5" stroke-linecap="round"/></svg></span>
+        <h3>Один аккаунт — три персонажа</h3>
+        <p>Записываешься один раз по логину, внутри создаются до <b>3 персонажей</b>. Прогресс и капчи хранятся отдельно по каждому.</p>
+      </div>
+      <div class="acard">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 3l8 8-9 9-4 1 1-4z" stroke-linejoin="round"/><path d="M11 14l6-6" stroke-linecap="round"/></svg></span>
+        <h3>Кросс-платформа</h3>
+        <p>Телефон (Android) и ПК сидят на <b>одном сервере</b>. Официальный клиент выкачивает все ресурсы сам — вручную качать нечего.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ИНСТРУКЦИЯ ================= -->
+<section class="sec" id="howto" style="padding-top:58px">
+  <div class="wrap">
+    <div class="shead" style="justify-content:center;text-align:center;margin-bottom:44px">
+      <div>
+        <h2>ИНСТРУКЦИЯ ПО УСТАНОВКЕ</h2>
+        <p>Выбери платформу — покажем по шагам, как в записи экрана</p>
+      </div>
+    </div>
+    <div class="ptabs">
+      <button class="ptab on" data-plat="win"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 5.6l8-1.1v7H3zM12.5 4.2l8.5-1.2V11h-8.5zM3 12.6h8v7l-8-1.1zM12.5 12.6h8.5v7.4l-8.5-1.2z"/></svg>WINDOWS</button>
+      <button class="ptab" data-plat="and"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.6 11.5c0-.4 0-3.6 1.9-5 0-.1-.1-.2-.2-.2-.2-.1-1.9-.3-3.3 1.1-.6-.3-1.8-.4-3-.4s-2.4.1-3 .4c-1.4-1.4-3.1-1.2-3.3-1.1-.1 0-.2.1-.2.2 1.9 1.4 1.9 4.6 1.9 5-.3.4-.5.8-.5 1.2 0 .9.9 1.6 1.9 1.6.3.3.9 1.1.9 1.1s0 2.9.1 3.3c0 .2.2.5.5.5h3.4c.3 0 .5-.3.5-.5 0-.4 0-3.3.1-3.3s.6-.8.9-1.1c1 0 1.9-.7 1.9-1.6 0-.4-.2-.8-.5-1.2z"/></svg>ANDROID</button>
+    </div>
+    <div id="gwin">
+    <div class="cinema">
+      <div class="cx">
+        <!-- страница 1: копия нашего сайта (hero) -->
+        <div class="vhp">
+          <div class="chr">
+            <span class="lg">CRIMSON<em>RP</em></span>
+            <span class="ob"><i></i>ИГРОКОВ: <b>16</b></span>
+            <div class="nv"><span>СКАЧАТЬ</span><span>О ПРОЕКТЕ</span><span>ИНСТРУКЦИЯ</span><span>FAQ</span><span>КОНТАКТЫ</span></div>
+            <div class="hr"><span class="ln">РУССКИЙ</span><span class="en">ВОЙТИ</span></div>
+          </div>
+          <div class="vgrid">
+            <div class="vmock">
+              <div class="vmtop"><i class="r"></i><i></i><i></i><span>CRIMSONRP.LAUNCHER</span></div>
+              <div class="vmbody">
+                <div class="vms">
+                  <span class="vmi"><i></i><u style="width:70%"></u></span>
+                  <span class="vmi"><i></i><u></u></span>
+                  <span class="vmi"><i></i><u style="width:52%"></u></span>
+                  <span class="vmi"><i></i><u style="width:80%"></u></span>
+                  <span class="vmi"><i></i><u style="width:44%"></u></span>
+                  <span class="vmi"><i></i><u style="width:72%"></u></span>
+                </div>
+                <div class="vmm">
+                  <div class="vmh"><b>CRIMSON RP</b><span>СЕЙЧАС ИГРАЮТ · 16</span></div>
+                  <div class="vmr"><i></i><u style="width:56%"></u></div>
+                  <div class="vmr"><i></i><u style="width:42%"></u></div>
+                  <div class="vmr"><i></i><u style="width:64%"></u></div>
+                  <div class="vmgo">ИГРАТЬ</div>
+                </div>
+              </div>
+            </div>
+            <div class="vhi">
+              <div class="vhb"><b>CRIMSON<em>RP</em></b><span>ЛАУНЧЕР</span></div>
+              <div class="vh1">САМЫЙ БЫСТРЫЙ И УДОБНЫЙ СПОСОБ НАЧАТЬ ИГРУ</div>
+              <div class="vft">КАК ЛУЧШЕ ВСЕГО НАЧАТЬ ИГРАТЬ</div>
+              <div class="vpt">
+                <div class="vpi"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20c.6-3.2 2.8-5 5.5-5s4.9 1.8 5.5 5" stroke-linecap="round"/></svg></span><p><b>Придумай персонажа заранее</b> — ник в формате Имя_Фамилия</p></div>
+                <div class="vpi"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4.5 11.5a11 11 0 0115 0" stroke-linecap="round"/><path d="M8 15a6.5 6.5 0 018 0" stroke-linecap="round"/></svg></span><p><b>Первый запуск — по Wi-Fi</b>, докачка кэша один раз</p></div>
+                <div class="vpi"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 3v5c0 4.8-3.2 8.3-7 10-3.8-1.7-7-5.2-7-10V6z" stroke-linejoin="round"/></svg></span><p><b>Играй по правилам RP</b> — истории заводятся сами</p></div>
+              </div>
+              <div class="vdlrow">
+                <span class="vbtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11m0 0l-4-4m4 4l4-4"/><path d="M5 19h14"/></svg>СКАЧАТЬ</span>
+                <span class="vlinks"><b>Android и ПК — одна игра</b><span>Гайд по установке — ниже</span><span>Системные требования</span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- страница 2: копия download -->
+        <div class="vdl">
+          <div class="chr">
+            <span class="lg">CRIMSON<em>RP</em></span>
+            <span class="ob"><i></i>ИГРОКОВ: <b>16</b></span>
+            <div class="nv"><span>СКАЧАТЬ</span><span>О ПРОЕКТЕ</span><span>ИНСТРУКЦИЯ</span><span>FAQ</span><span>КОНТАКТЫ</span></div>
+            <div class="hr"><span class="ln">РУССКИЙ</span><span class="en">ВОЙТИ</span></div>
+          </div>
+          <div class="vdlt"><b>ЗАГРУЗКА CRIMSON RP</b><p>Выбери свою платформу — остальное докачает лаунчер</p></div>
+          <div class="vcards">
+            <div class="vcard w">
+              <div class="pk"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 5.6l8-1.1v7H3zM12.5 4.2l8.5-1.2V11h-8.5zM3 12.6h8v7l-8-1.1zM12.5 12.6h8.5v7.4l-8.5-1.2z"/></svg></div>
+              <div class="pn">WINDOWS 11</div>
+              <div class="pd">Установи лаунчер и жми «Играть» — клиент сам подключится к серверу Crimson RP.</div>
+              <div class="pb">ВЫБРАТЬ WINDOWS</div>
+            </div>
+            <div class="vcard a">
+              <div class="pk"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.6 11.5c0-.4 0-3.6 1.9-5 0-.1-.1-.2-.2-.2-.2-.1-1.9-.3-3.3 1.1-.6-.3-1.8-.4-3-.4s-2.4.1-3 .4c-1.4-1.4-3.1-1.2-3.3-1.1-.1 0-.2.1-.2.2 1.9 1.4 1.9 4.6 1.9 5-.3.4-.5.8-.5 1.2 0 .9.9 1.6 1.9 1.6.3.3.9 1.1.9 1.1s0 2.9.1 3.3c0 .2.2.5.5.5h3.4c.3 0 .5-.3.5-.5 0-.4 0-3.3.1-3.3s.6-.8.9-1.1c1 0 1.9-.7 1.9-1.6 0-.4-.2-.8-.5-1.2z"/></svg></div>
+              <div class="pn">ANDROID</div>
+              <div class="pd">APK поставится с телефона сам — разрешение на установку в один клик.</div>
+              <div class="pb">ВЫБРАТЬ ANDROID</div>
+            </div>
+          </div>
+        </div>
+        <!-- панель загрузки как в браузере Windows -->
+        <div class="vbar">
+          <span class="pico"><svg viewBox="0 0 24 24" fill="#fff"><path d="M6 2h9l5 5v13a2 2 0 01-2 2H6a2 2 0 01-2-2V4a2 2 0 012-2z" opacity=".35"/><path d="M15 2l5 5h-5z" fill="#fff" opacity=".7"/></svg></span>
+          <span class="fmeta"><span class="fn">Crimson-RP-Setup.exe</span><span class="fs">86,3 МБ · Загрузка с crimsonrp…</span></span>
+          <span class="tr"><b></b></span>
+          <span class="pct"></span>
+        </div>
+        <!-- окно установщика Windows -->
+        <div class="vwin">
+          <div class="vwt"><span class="ti"></span><b>Установка Crimson RP — Setup</b><span class="xx">✕</span></div>
+          <div class="vwb">
+            <div class="vw1">
+              <p>Это установит <b style="color:#fff">Crimson RP Launcher</b> на твой компьютер. Рекомендуем закрыть другие приложения перед продолжением.</p>
+              <div class="vwr">
+                <div class="vrow"><span>Папка установки</span><b>C:\Games\Crimson RP</b></div>
+                <div class="vrow"><span>Версия</span><b>1.13.2 x64 · Windows 11</b></div>
+                <div class="vrow"><span>Размер</span><b>86,3 МБ</b></div>
+              </div>
+            </div>
+            <div class="vw2">
+              <div class="ws"><span>РАСПАКОВКА ФАЙЛОВ…</span><b class="p2"></b></div>
+              <div class="tr"><b></b></div>
+              <div class="fp">client.exe · assets.pak · audio.pak · crimson.dll</div>
+            </div>
+            <div class="vw3">
+              <span class="vs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 12.5l5 5L20 6.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <p>Установка завершена</p>
+              <span>Ярлык создан — запускай и жми «Играть»</span>
+            </div>
+            <span class="vwc">ОТМЕНА</span>
+            <span class="vwbtn"></span>
+          </div>
+        </div>
+        <svg class="cur vc" viewBox="0 0 14 19" fill="#fff"><path d="M1 1l5 14 2.4-5.2L14 8.3z" opacity=".9"/></svg>
+        <div class="vcover"></div>
+      </div>
+      <div class="cstage">
+        <span class="crumb cr1"><b>1</b>САЙТ</span>
+        <span class="crumb cr2"><b>2</b>ВЫБОР WINDOWS</span>
+        <span class="crumb cr3"><b>3</b>ЗАГРУЗКА</span>
+        <span class="crumb cr4"><b>4</b>УСТАНОВКА</span>
+      </div>
+      <p class="ccap">Ровно как в жизни: <b>нажми «СКАЧАТЬ»,</b> выбери Windows, дождись загрузки <b>Crimson-RP-Setup.exe</b> и установи лаунчер — потом жми «Играть».</p>
+    </div>
+    </div><!-- /gwin -->
+    <div class="android" id="gand" hidden>
+      <div class="acx">
+        <!-- A: мобильная копия сайта -->
+        <div class="as asite">
+          <div class="astat sbw"><span>00:42</span><span class="asr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4.5 10.5a10 10 0 0115 0" stroke-linecap="round"/><path d="M8 14a6 6 0 018 0" stroke-linecap="round"/><path d="M12 17.5h.01" stroke-linecap="round"/></svg><span class="abat">100</span></span></div>
+          <div class="amh"><b>CRIMSON<i>RP</i></b><span class="abur"><i></i><i></i><i></i></span></div>
+          <div class="ahero">
+            <span class="apill">ЛАУНЧЕР</span>
+            <h5>САМЫЙ БЫСТРЫЙ И УДОБНЫЙ СПОСОБ НАЧАТЬ ИГРУ</h5>
+            <span class="akick">КАК ЛУЧШЕ ВСЕГО НАЧАТЬ ИГРАТЬ</span>
+            <div class="afeats"><span>Ник в формате Имя_Фамилия</span><span>Кэш докачается сам — по Wi-Fi</span><span>Полный отыгрыш историй</span></div>
+            <span class="abtn">СКАЧАТЬ</span>
+            <span class="anote">WINDOWS И ANDROID · ИГРОКОВ ОНЛАЙН: 16</span>
+          </div>
+        </div>
+        <!-- B: страница загрузки -->
+        <div class="as adlpg">
+          <div class="astat sbw"><span>00:42</span><span class="asr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4.5 10.5a10 10 0 0115 0" stroke-linecap="round"/><path d="M8 14a6 6 0 018 0" stroke-linecap="round"/><path d="M12 17.5h.01" stroke-linecap="round"/></svg><span class="abat">100</span></span></div>
+          <div class="amh"><b>CRIMSON<i>RP</i></b><span class="abur"><i></i><i></i><i></i></span></div>
+          <div class="adlt"><b>ЗАГРУЗКА CRIMSON RP</b><span>Выбери свою платформу — остальное докачает лаунчер</span></div>
+          <div class="acards">
+            <div class="acard acw"><div class="pkh"><span class="apkico"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 5.6l8-1.1v7H3zM12.5 4.2l8.5-1.2V11h-8.5zM3 12.6h8v7l-8-1.1zM12.5 12.6h8.5v7.4l-8.5-1.2z"/></svg></span><b>WINDOWS</b></div><i>Лаунчер · 86,3 МБ · v1.13.2</i></div>
+            <div class="acard acnd"><div class="pkh"><span class="apkico"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.6 11.5c0-.4 0-3.6 1.9-5 0-.1-.1-.2-.2-.2-.2-.1-1.9-.3-3.3 1.1-.6-.3-1.8-.4-3-.4s-2.4.1-3 .4c-1.4-1.4-3.1-1.2-3.3-1.1-.1 0-.2.1-.2.2 1.9 1.4 1.9 4.6 1.9 5-.3.4-.5.8-.5 1.2 0 .9.9 1.6 1.9 1.6.3.3.9 1.1.9 1.1s0 2.9.1 3.3c0 .2.2.5.5.5h3.4c.3 0 .5-.3.5-.5 0-.4 0-3.3.1-3.3s.6-.8.9-1.1c1 0 1.9-.7 1.9-1.6 0-.4-.2-.8-.5-1.2z"/></svg></span><b>ANDROID</b></div><i>APK · 96,4 МБ · установка в один тап</i></div>
+          </div>
+          <div class="adlb">
+            <span class="dic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v10m0 0l-3.5-3.5M12 14l3.5-3.5"/></svg></span>
+            <span class="fnw"><span class="fn">Crimson-RP.apk</span><span class="ds">96,4 МБ · Загрузка…</span></span>
+            <span class="dtr"><b></b></span>
+            <span class="dck">✓</span>
+          </div>
+          <div class="anot">
+            <span class="ni"><svg viewBox="0 0 24 24" fill="#fff"><path d="M6 2h9l5 5v13a2 2 0 01-2 2H6a2 2 0 01-2-2V4a2 2 0 012-2z"/></svg></span>
+            <span class="nt"><b>Crimson-RP.apk</b><i>Файл загружен · Нажмите, чтобы установить</i></span>
+            <span class="nc">›</span>
+          </div>
+        </div>
+        <!-- D: системный установщик (bottom-sheet) -->
+        <div class="ainst"><div class="asheet">
+          <div class="asheah"><span class="aico">C</span><b>CRIMSON RP</b></div>
+          <div class="ast st1"><p>Установить приложение?</p><div class="arow"><span>Отмена</span><span class="ag">Установить</span></div></div>
+          <div class="ast st2"><p>Установка…</p><span class="aprog"><i></i></span><div class="arow"><span>Отмена</span></div></div>
+          <div class="ast st3"><p>Приложение установлено</p><div class="arow"><span>Готово</span><span class="agf">Открыть</span></div></div>
+        </div></div>
+        <span class="atp atp1"></span>
+        <span class="atp atp2"></span>
+        <span class="atp atp3"></span>
+        <span class="atp atp4"></span>
+        <span class="atp atp5"></span>
+        <div class="ashut"></div>
+      </div>
+      <p class="acap">На телефоне так же: <b>«СКАЧАТЬ» → «ANDROID»</b> — браузер скачает APK, коснись <b>уведомления «Файл загружен»</b> и подтверди установку. Система спросит про источники — разреши.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FAQ ================= -->
+<section class="sec" id="faq" style="padding-top:10px">
+  <div class="wrap">
+    <div class="shead">
+      <div><h2>ОТВЕТЫ НА ЧАСТЫЕ ВОПРОСЫ</h2></div>
+      <span class="sp"><button class="btnghost" id="helpBtn">ОТКРЫТЬ СПРАВОЧНЫЙ РАЗДЕЛ</button></span>
+    </div>
+    <div class="faq">
+      <div class="fcard">
+        <h4>Как подключиться к серверу?</h4>
+        <p>Ничего вводить не нужно: клиент <b>Crimson RP</b> сам подключается к нашему серверу — просто жми «Играть». Для ПК после установки SA-MP актуальный адрес подскажет <a data-toast="Ссылка на Discord появится позже" href="javascript:void(0)">Discord</a> или <a data-toast="Ссылка на Telegram появится позже" href="javascript:void(0)">Telegram</a> поддержки.</p>
+      </div>
+      <div class="fcard">
+        <h4>Как создать своего персонажа?</h4>
+        <p>Ник в игре должен быть в формате <b>Имя_Фамилия</b> — латиницей, каждое слово с большой буквы. Регистрация (E-mail, пароль, пол и внешность) выполняется прямо в игре: процессом управляет встроенная система <b>Crimson ID</b>. Один аккаунт охватывает всех персонажей на сервере.</p>
+      </div>
+      <div class="fcard">
+        <h4>Не запускается или вылетает?</h4>
+        <p>Если клиент не докачал кэш или вылетает при старте — свяжитесь с поддержкой: <a data-toast="Ссылка на Discord появится позже" href="javascript:void(0)">Discord</a> или <a data-toast="Ссылка на Telegram появится позже" href="javascript:void(0)">Telegram</a>. Первым делом уточните, откуда скачали APK — сам файл должен быть именно наш.</p>
+      </div>
+      <div class="fcard">
+        <h4>Нашёл баг или есть идея?</h4>
+        <p>Чуть ниже есть форма <a href="#feedback">«Баги и предложения»</a> — пиши любой ник и описание: вылет, лаг, хотелку по серверу. Всё доходит напрямую до разработчиков, можно без регистрации.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= БАГИ И ПРЕДЛОЖЕНИЯ ================= -->
+<section class="sec" id="feedback" style="padding-top:10px">
+  <div class="wrap">
+    <div class="shead" style="justify-content:center;text-align:center;margin-bottom:34px">
+      <div>
+        <h2>БАГИ И ПРЕДЛОЖЕНИЯ</h2>
+        <p>Нашёл вылет, багу или хочешь фишку на сервер — напиши: ник любой, прочитаем всё</p>
+      </div>
+    </div>
+    <div class="fbcard">
+      <div class="fbkind">
+        <span class="on" data-k="БАГ">🐞 БАГ</span>
+        <span data-k="ИДЕЯ">💡 ИДЕЯ</span>
+        <span data-k="ДРУГОЕ">💬 ДРУГОЕ</span>
+      </div>
+      <input id="fbnick" class="fbin" type="text" maxlength="24" autocomplete="off" placeholder="Твой ник (любой)">
+      <textarea id="fbmsg" class="fbtx" maxlength="1200" placeholder="Что сломалось / что добавить? Опиши в деталях — так быстрее починим. Если вылет — что делал за минуту до него"></textarea>
+      <input id="fbhp" class="fbin hp" type="text" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <div class="fbfoot">
+        <span class="fbstatus" id="fbstatus"></span>
+        <button class="btnred" id="fbsend">ОТПРАВИТЬ</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ПОДПИСКА ================= -->
+<section class="sec" style="padding-top:10px">
+  <div class="wrap">
+    <div class="sub">
+      <span class="env"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M3 8l9 6 9-6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <div class="st">
+        <h3>ПОДПИШИСЬ НА НОВОСТИ CRIMSON RP</h3>
+        <p>Чтобы не пропускать важные события проекта, обновления и персональные бонус-коды</p>
+      </div>
+      <div>
+        <div class="sform">
+          <input id="subEmail" type="email" placeholder="Введите свой email" autocomplete="off">
+          <button class="btnred" id="subBtn">ПОДПИСАТЬСЯ</button>
+        </div>
+        <div class="fine">Подписываясь, вы принимаете <button data-toast="Документ появится позже">политику обработки персональных данных</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ФУТЕР ================= -->
+<footer class="foot" id="contacts">
+  <div class="wrap">
+    <div class="fgrid">
+      <div class="fbrand">
+        <b>CRIMSON<em>RP</em></b>
+        <div class="cr">
+          Crimson RP — Roleplay-проект<br>
+          SA:MP · Android / ПК<br>
+          © 2022–2026 Crimson RP
+        </div>
+      </div>
+      <div class="fcol">
+        <h5>ИГРОКАМ</h5>
+        <a href="download.html">Начать играть</a>
+        <a href="#howto">Инструкция</a>
+        <a href="#feedback">Сообщить о баге</a>
+        <a data-toast="Форум появится позже" href="javascript:void(0)">Форум</a>
+      </div>
+      <div class="fcol">
+        <h5>ИНФОРМАЦИЯ</h5>
+        <a data-toast="Пользовательское соглашение появится позже" href="javascript:void(0)">Пользовательское соглашение</a>
+        <a data-toast="Политика появится позже" href="javascript:void(0)">Политика конфиденциальности</a>
+        <a data-toast="Правила сервера появятся позже" href="javascript:void(0)">Правила сервера</a>
+      </div>
+      <div class="fcol">
+        <h5>КОНТАКТЫ</h5>
+        <a data-toast="Ссылка на Discord появится позже" href="javascript:void(0)">Поддержка — Discord</a>
+        <a data-toast="Ссылка на Telegram появится позже" href="javascript:void(0)">Поддержка — Telegram</a>
+        <a data-toast="Почта появится позже" href="javascript:void(0)">help@crimson-rp.ru</a>
+        <div class="pays" style="margin-top:16px"><i>МИР</i><i>VISA</i><i>MC</i><i>СБЕР</i></div>
+        <div class="status"><i></i><span>Все системы в порядке</span></div>
+      </div>
+    </div>
+    <div class="fbot">
+      <span><b>Crimson RP</b> — неофициальный развлекательный проект по мотивам Grand Theft Auto: San Andreas</span>
+      <span id="year">2026</span>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<div class="themes" id="themes">
+  <button class="thd on" data-th="red" style="--c:255,33,53" title="Красный (оригинал)" aria-label="Красная тема"></button>
+  <button class="thd" data-th="green" style="--c:39,209,101" title="Зелёный" aria-label="Зелёная тема"></button>
+  <button class="thd" data-th="blue" style="--c:62,180,255" title="Голубой" aria-label="Голубая тема"></button>
+  <button class="thd" data-th="gold" style="--c:255,196,68" title="Золотой" aria-label="Золотая тема"></button>
+  <button class="thd" data-th="violet" style="--c:157,102,255" title="Фиолетовый" aria-label="Фиолетовая тема"></button>
+</div>
+
+<!-- ================= ВЫБОР ПЛАТФОРМЫ (открывается по кнопке СКАЧАТЬ) ================= -->
+<div class="pmodal" id="pmodal" hidden>
+  <div class="bgl"></div>
+  <div class="pmx">
+    <div class="pmtop">
+      <div class="pmt">ВЫБЕРИ СВОЮ ПЛАТФОРМУ</div>
+      <div class="pmxcls" id="pmClose" title="Закрыть" role="button" tabindex="0">✕</div>
+    </div>
+    <div class="pgridm">
+      <button class="pmcard and" id="pmAnd" type="button">
+        <div class="bic"><svg viewBox="0 0 24 24" fill="#3ddc84"><path d="M17.6 11.5c0-.4 0-3.6 1.9-5 0-.1-.1-.2-.2-.2-.2-.1-1.9-.3-3.3 1.1-.6-.3-1.8-.4-3-.4s-2.4.1-3 .4c-1.4-1.4-3.1-1.2-3.3-1.1-.1 0-.2.1-.2.2 1.9 1.4 1.9 4.6 1.9 5-.3.4-.5.8-.5 1.2 0 .9.9 1.6 1.9 1.6.3.3.9 1.1.9 1.1s0 2.9.1 3.3c0 .2.2.5.5.5h3.4c.3 0 .5-.3.5-.5 0-.4 0-3.3.1-3.3s.6-.8.9-1.1c1 0 1.9-.7 1.9-1.6 0-.4-.2-.8-.5-1.2z"/></svg></div>
+        <div class="pn" style="color:#3ddc84">ANDROID</div>
+        <div class="pm">Официальный клиент для телефона: сам поставит игру, докачает кэш и сразу подключит к серверу.</div>
+        <div class="tag"><i>ANDROID 7.0+</i><i>3 ГБ RAM</i><i>WI-FI ДЛЯ КЭША</i></div>
+        <span class="go">ВЫБРАТЬ ANDROID <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span>
+      </button>
+      <button class="pmcard win" id="pmWin" type="button">
+        <div class="bic"><svg viewBox="0 0 24 24" fill="#4cc2ff"><path d="M3 5.6l8-1.1v7H3zM12.5 4.2l8.5-1.2V11h-8.5zM3 12.6h8v7l-8-1.1zM12.5 12.6h8.5v7.4l-8.5-1.2z"/></svg></div>
+        <div class="pn" style="color:#4cc2ff">WINDOWS 11</div>
+        <div class="pm">Классический SA-MP клиент для ПК: ставится поверх своей GTA San Andreas 1.0, тот же сервер и те же люди.</div>
+        <div class="tag"><i>GTA SA 1.0</i><i>SA-MP 0.3.7</i><i>86 МБ</i></div>
+        <span class="go">ВЫБРАТЬ WINDOWS <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var modal=document.getElementById('pmodal'), lastFocus=null;
+  function open(){
+    if(!modal.hidden) return;
+    lastFocus=document.activeElement;
+    modal.hidden=false;
+    document.documentElement.style.overflow='hidden';
+    try{ document.getElementById('pmClose').focus(); }catch(e){}
+  }
+  function close(){
+    modal.hidden=true;
+    document.documentElement.style.overflow='';
+    if(lastFocus&&lastFocus.focus) try{ lastFocus.focus(); }catch(e){}
+  }
+  window.openPlatformPick=open;
+
+  /* все старые ссылки на download.html → модалка выбора (сайт остаётся одним файлом) */
+  [].slice.call(document.querySelectorAll('a[href*="download.html"]')).forEach(function(a){
+    a.addEventListener('click',function(e){ e.preventDefault(); open(); });
+  });
+
+  document.getElementById('pmClose').addEventListener('click',close);
+  document.getElementById('pmClose').addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' ') close(); });
+  modal.querySelector('.bgl').addEventListener('click',close);
+  window.addEventListener('keydown',function(e){ if(e.key==='Escape'&&!modal.hidden) close(); });
+
+  function choose(plat){
+    var tb=document.querySelector('.ptab[data-plat="'+plat+'"]');
+    if(tb) tb.click();
+    close();
+    var sec=document.getElementById('howto');
+    if(sec) try{ sec.scrollIntoView({behavior:'smooth',block:'start'}); }catch(e){ sec.scrollIntoView(); }
+  }
+  document.getElementById('pmAnd').addEventListener('click',function(){ choose('and'); });
+  document.getElementById('pmWin').addEventListener('click',function(){ choose('win'); });
+})();
+</script>
+
+<script>
+(function(){
+  function $(id){ return document.getElementById(id); }
+  var toast=$('toast'), ttmr;
+  function toastMsg(html){
+    toast.innerHTML=html; toast.classList.add('show');
+    clearTimeout(ttmr); ttmr=setTimeout(function(){ toast.classList.remove('show'); },2800);
+  }
+  /* кнопка войти */
+  $('loginBtn').addEventListener('click',function(){
+    toastMsg('Вход выполняется <em>в лаунчере</em> — скачивай APK и играй');
+  });
+  /* язык */
+  $('langBtn').addEventListener('click',function(){ toastMsg('Английский интерфейс <em>скоро</em>'); });
+  /* справочный раздел */
+  $('helpBtn').addEventListener('click',function(){ toastMsg('Справочный раздел появится чуть позже'); });
+  /* системные требования */
+  $('sysreq').addEventListener('click',function(){
+    toastMsg('Android 7.0+, 3 ГБ RAM, ~3 ГБ памяти, стабильный Wi-Fi');
+  });
+  /* тост-ссылки */
+  [].slice.call(document.querySelectorAll('[data-toast]')).forEach(function(a){
+    a.addEventListener('click',function(){ if(a.dataset.toast) toastMsg(a.dataset.toast); });
+  });
+  /* копирование IP */
+  [].slice.call(document.querySelectorAll('[data-copy]')).forEach(function(c){
+    c.addEventListener('click',function(){
+      var v=c.getAttribute('data-copy');
+      try{
+        var ta=document.createElement('textarea'); ta.value=v; document.body.appendChild(ta);
+        ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+        toastMsg('Скопировано: <em>'+v+'</em>');
+      }catch(e){ toastMsg('Скопируй: <em>'+v+'</em>'); }
+    });
+  });
+  /* подписка */
+  $('subBtn').addEventListener('click',function(){
+    var v=$('subEmail').value.trim();
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)){ toastMsg('Проверь формат <em>email</em>'); return; }
+    toastMsg('Готово! Письмо с подтверждением на <em>'+v+'</em> придёт позже');
+    $('subEmail').value='';
+  });
+  /* центральную плитку - к выбору платформы (модалка, сайт один файл) */
+  document.querySelector('.pc[data-goto]').addEventListener('click',function(){
+    if(window.openPlatformPick) window.openPlatformPick();
+  });
+  /* год */
+  $('year').textContent=String(new Date().getFullYear());
+  /* бургер */
+  var mn=$('mobnav');
+  $('burger').addEventListener('click',function(){ mn.classList.toggle('open'); });
+  [].slice.call(mn.querySelectorAll('a')).forEach(function(a){
+    a.addEventListener('click',function(){ mn.classList.remove('open'); });
+  });
+  /* лёгкий tilt для мока */
+  var mock=document.querySelector('[data-tilt]');
+  if(mock){
+    var wrap=mock.parentElement;
+    wrap.addEventListener('mousemove',function(e){
+      var r=wrap.getBoundingClientRect();
+      var x=(e.clientX-r.left)/r.width-0.5, y=(e.clientY-r.top)/r.height-0.5;
+      mock.style.transform='perspective(1400px) rotateY('+(-7+x*(-4)).toFixed(1)+'deg) rotateX('+(2+y*(-3)).toFixed(1)+'deg)';
+    });
+    wrap.addEventListener('mouseleave',function(){ mock.style.transform='perspective(1400px) rotateY(-7deg) rotateX(2deg)'; });
+  }
+  /* цветовые темы: 5 точек справа */
+  var thName={red:'Красная',green:'Зелёная',blue:'Голубая',gold:'Золотая',violet:'Фиолетовая'};
+  var thd=[].slice.call(document.querySelectorAll('.thd'));
+  function applyTheme(t,silent){
+    document.documentElement.setAttribute('data-theme',t);
+    thd.forEach(function(d){ d.classList.toggle('on',d.getAttribute('data-th')===t); });
+    try{ localStorage.setItem('crimson-theme',t); }catch(e){}
+    if(!silent) toastMsg('Тема интерфейса: <em>'+(thName[t]||t)+'</em>');
+  }
+  thd.forEach(function(d){
+    d.addEventListener('click',function(){ applyTheme(d.getAttribute('data-th')); });
+  });
+  (function(){ var t=null; try{ t=localStorage.getItem('crimson-theme'); }catch(e){}
+    if(t && thName[t] && t!=='red'){ applyTheme(t,true); } })();
+  /* ===== БАГИ И ПРЕДЛОЖЕНИЯ =====
+     Куда уходят репорты — задано в ОДНОЙ строке ниже (FormSubmit на почту).
+     Первая отправка потребует подтверждения: открыть письмо от FormSubmit и нажать Activate.
+     Позже можно переключить на свой send.php на хостинге — путь сюда же и вшивается. */
+  var FB_URL='https://formsubmit.co/ajax/zywoomatie@gmail.com';
+  var fbKind='БАГ', fbLast=0;
+  [].slice.call(document.querySelectorAll('.fbkind span')).forEach(function(c){
+    c.addEventListener('click',function(){
+      fbKind=c.getAttribute('data-k');
+      [].slice.call(c.parentNode.children).forEach(function(o){ o.classList.remove('on'); });
+      c.classList.add('on');
+    });
+  });
+  function fbSave(kind,nick,msg){
+    try{
+      var box=JSON.parse(localStorage.getItem('crimson-fb-outbox')||'[]');
+      box.push({d:new Date().toLocaleString('ru-RU'),k:kind,n:nick,m:msg});
+      if(box.length>20) box=box.slice(-20);
+      localStorage.setItem('crimson-fb-outbox',JSON.stringify(box));
+    }catch(e){}
+  }
+  $('fbsend').addEventListener('click',function(){
+    var nick=$('fbnick').value.trim(), msg=$('fbmsg').value.trim();
+    if($('fbhp').value){ return; }
+    if(Date.now()-fbLast<30000){ toastMsg('Слишком часто — подожди <em>полминуты</em>'); return; }
+    if(msg.length<10){ toastMsg('Опиши подробнее — <em>от 10 символов</em>'); return; }
+    fbLast=Date.now();
+    var btn=this; btn.disabled=true; var old=btn.textContent; btn.textContent='ОТПРАВЛЯЮ…';
+    var body={ '_subject':fbKind+' · Crimson RP — сайт', '_template':'box', '_captcha':'false',
+      'Тип':fbKind, 'Ник':nick||'анонимный', 'Сообщение':msg,
+      'Страница':location.href, 'Дата':new Date().toLocaleString('ru-RU') };
+    fetch(FB_URL,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(body)})
+    .then(function(r){ return r.json(); })
+    .then(function(j){
+      btn.disabled=false; btn.textContent=old;
+      var m=(j&&j.message)||'';
+      if(j && (j.success==='true'||j.success===true)){
+        $('fbmsg').value='';
+        toastMsg('Отправлено! <em>Спасибо</em>');
+        fbStatSet(m);
+      }else if(/activat/i.test(m)){
+        fbStatSet(m);
+        toastMsg('Форма ждёт <em>активации</em> — проверь почту');
+      }else{
+        fbSave(fbKind,nick,msg);
+        toastMsg('Не отправилось <em>сохранил</em> — попробуй позже');
+      }
+    })
+    .catch(function(){
+      btn.disabled=false; btn.textContent=old;
+      fbSave(fbKind,nick,msg);
+      toastMsg('Нет связи <em>сохранил</em> — попробуй позже');
+    });
+  });
+  function fbStatSet(serverMsg){
+    var s=$('fbstatus');
+    if(serverMsg && /activat/i.test(serverMsg)){
+      s.textContent='Ушло! Но один раз подтверди форму: открой письмо от FormSubmit и нажми Activate — тогда следующие письма будут доходить каждый раз';
+    }else{
+      s.textContent='Дошло! Читаем — ответим, если оставишь контакт в сообщении';
+    }
+  }
+  /* платформенные табы: WINDOWS / ANDROID */
+  var ptabs=[].slice.call(document.querySelectorAll('.ptab'));
+  ptabs.forEach(function(b){
+    b.addEventListener('click',function(){
+      ptabs.forEach(function(o){ o.classList.remove('on'); });
+      b.classList.add('on');
+      $('gwin').hidden = b.getAttribute('data-plat')!=='win';
+      $('gand').hidden = b.getAttribute('data-plat')!=='and';
+    });
+  });
+})();
+</script>
+</body>
+</html>
